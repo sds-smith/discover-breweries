@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
-import { BreweryType, BreweryArray } from "./types.utils";
+import { BreweryArray } from "./types.utils";
 
 
 export type BreweryContextProps = {
     defaultBreweries: BreweryArray;
     setDefaultBreweries(defaultBreweries: BreweryArray): void;
     breweriesNearMe: BreweryArray;
-    setBreweriesNearMe(breweriesNearMe: BreweryArray): void;
+    setBreweriesNearMe(breweriesNearMe: BreweryArray): void;    
+    searchCityBreweries: BreweryArray;
+    setSearchCityBreweries(searchCityBreweries: BreweryArray): void;
     loadText: string;
     setLoadText(loadText: string): void;
     hasBreweries(array: BreweryArray): boolean

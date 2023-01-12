@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 
 import CityTable from "../../components/city-table/city-table.component";
 
@@ -8,28 +9,29 @@ import { BreweryContext } from "../../context/brewery.context";
 import { ClientContext } from "../../context/client.context";
 import { BreweryArray } from "../../utils/types.utils";
 
-const BreweriesNearMe = () => {
-
-    const {hasBreweries, breweriesNearMe} = useContext(BreweryContext);
+const SearchResults = () => {
+    const params = useParams()
+    const {hasBreweries, searchCityBreweries} = useContext(BreweryContext);
     const  {locationErrorMsg} = useContext(ClientContext);
 
-    const {getMyLocalBreweries} = useGetBreweries();
+    const {getSearchCityBreweries} = useGetBreweries();
 
     useEffect(() => {
-        if (!hasBreweries(breweriesNearMe)) {
-            getMyLocalBreweries();
+        if (!hasBreweries(searchCityBreweries)) {
+            const city = params.city as string
+            getSearchCityBreweries(city);
         };
-    })
+    },[])
 
     return (
         <div>
             { locationErrorMsg ? 
                 <div>{`${locationErrorMsg}. Please return to home page.`}</div>
                 : 
-                <CityTable breweriesToRender={breweriesNearMe} />
+                <CityTable breweriesToRender={searchCityBreweries} />
             }
         </div>
     )
 };
 
-export default BreweriesNearMe;
+export default SearchResults;

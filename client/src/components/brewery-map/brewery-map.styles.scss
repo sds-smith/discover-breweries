@@ -1,7 +1,5 @@
 
 .mapContainer {
     height: 35vh;
-    width: 35vw;
-    resize: both;
-    overflow: auto;
+    min-width: 100%;
 }

@@ -1,12 +1,16 @@
+
 import { Outlet } from "react-router-dom";
-import Header from "../../components/header/header.component";
+import ButtonAppBar from "../../components/header/button-app-bar.component";
+import BreadcrumbTrail from "../../components/breadcrumbs/breadcrumbs.component";
 
 import './navigation.styles.scss'
 
 const Navigation = () => {
+
     return (
         <div className='navigationContainer'>
-            <Header />
+            <ButtonAppBar />
+            <BreadcrumbTrail />
             <Outlet />
         </div>
     )

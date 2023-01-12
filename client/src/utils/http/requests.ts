@@ -1,15 +1,24 @@
 import axios from 'axios';
 
-const API_BASE_URL='v1';
+const API_BASE_URL='http://localhost/v1';
+
+export async function httpGetSearchCityBreweries(city: string) {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/breweries/by-city?city=${city}`)
+        return await response.data
+    } catch (err) {
+        return err
+    }
+};
 
 export async function httpGetMyLocalBreweries(clientLatLong: string) {
-        try {
-            const response = await axios.get(`${API_BASE_URL}/breweries/by-dist?latLong=${clientLatLong}`)
-            return await response.data
-        } catch (err) {
-            return err
-        }
-  };
+    try {
+        const response = await axios.get(`${API_BASE_URL}/breweries/by-dist?latLong=${clientLatLong}`)
+        return await response.data
+    } catch (err) {
+        return err
+    }
+};
 
 export async function httpgetDefaultBreweries() {
     try {

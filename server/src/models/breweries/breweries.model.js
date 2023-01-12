@@ -1,6 +1,6 @@
 const path = require('path');
 const axios = require('axios');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+require('dotenv').config();
 
 const breweries = require('./breweries.mongo');
 
@@ -115,6 +115,69 @@ async function getGeoCode(postal_code) {
     }
 };
 
+async function getBreweriesByCity(city) {
+    try {
+        const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_city=${city}`);
+        const breweryDocs = await response.data;
+        const breweriesToReturn = []
+        for (const breweryDoc of breweryDocs) {
+            const {id, name, brewery_type, street, city, state, postal_code, website_url, longitude, latitude} = breweryDoc;
+            let longToSet
+            let latToSet
+            if (!longitude || !latitude) {
+                const {data} = await getGeoCode(postal_code)
+                longToSet = data.lng
+                latToSet = data.lat
+            } else {
+                longToSet = longitude
+                latToSet = latitude
+            }
+            const brewery = {
+                id,
+                name,
+                brewery_type,
+                street,
+                city,
+                state,
+                postal_code,
+                website_url,
+                longitude: longToSet,
+                latitude: latToSet
+            }
+            breweriesToReturn.push(brewery)
+        };
+        return {
+            status: 200,
+            breweriesToReturn
+        }
+    } catch (err) {
+        console.log(err.message)
+        return err
+    }
+}
+
+async function getSearchCityBreweries(city) {
+    const searchCityBreweries = await getBreweriesByCity(city)
+    if (searchCityBreweries.status === 200) {
+        return {
+            ok: true,
+            status: searchCityBreweries.status,
+            data: {
+                breweries: searchCityBreweries.breweriesToReturn,
+                message: `Breweries Retrieved`
+            }
+        }
+    } else {
+        return {
+            ok: false,
+            status: 500,
+            data: {
+                message: searchCityBreweries.message
+            }
+        }
+    }
+}
+
 async function getBreweriesNearMe(latLong) {
     try {
         const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_dist=${latLong}`);
@@ -142,5 +205,6 @@ module.exports = {
     loadBreweriesData,
     getDefaultBreweries,
     getGeoCode,
+    getSearchCityBreweries,
     getBreweriesNearMe
 }

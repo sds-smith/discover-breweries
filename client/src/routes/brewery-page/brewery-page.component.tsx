@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import BreweryCard from '../../components/brewery-card/brewery-card.component';
+import BreweryCard from '../../components/brewery-card/mui-card.component';
 
 import './brewery-page.styles.scss';
 
@@ -11,8 +11,7 @@ const BreweryPage = () => {
     };
 
     return (
-        <div>
-            <div className='backButton' onClick={goBack}>{'<-- Back'}</div>
+        <div className='breweryPageContainer'>
             <BreweryCard />
         </div>
 

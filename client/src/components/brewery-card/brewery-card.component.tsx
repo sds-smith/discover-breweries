@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import BreweryMap from '../brewery-map/brewery-map.component';
-import useBreweriesNearMe from '../../utils/hooks/use-breweries-near-me';
+import useGetBreweries from '../../utils/hooks/use-get-breweries';
 
 import { BreweryType, CenterType, defaultBreweryState, defaultCenter, GetBreweryResponseType } from '../../utils/types.utils';
 
@@ -13,7 +13,7 @@ const BreweryCard = () => {
  
     const {name, street, city, state, postal_code} = brewery;
 
-    const {getBrewery} = useBreweriesNearMe();
+    const {getBrewery} = useGetBreweries();
 
     useEffect(() => {
         const {brewery, center} = getBrewery() as GetBreweryResponseType;

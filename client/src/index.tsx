@@ -16,6 +16,5 @@ root.render(
                 <App />
             </BreweryProvider>
         </ClientProvider>
-
     </BrowserRouter>
 )

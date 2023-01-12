@@ -1,6 +1,14 @@
 import {useState, useEffect, useContext, FC} from 'react';
 
-import TableRow from '../table-row/table-row.component';
+import CityTableRow from '../table-row/table-row.component';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography'
 
 import { BreweryContext } from '../../context/brewery.context';
 import { BreweryArray } from '../../utils/types.utils';
@@ -23,30 +31,30 @@ const CityTable: FC<CityTableProps> = ({breweriesToRender}) => {
     return (
         <>
             { hasBreweries(breweriesToRender) ? (
-                <div>    
-                    <h2>{`Breweries near ${city}`}</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name (click a brewery name to view more)</th>
-                                <th>Type</th>
-                                <th>Address</th>
-                                <th>Website (click to visit)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <TableContainer >     
+                    <Typography variant='h4' component='h2'>{`Breweries near ${city}`}</Typography>
+                    <Table component={Paper} elevation={12} sx={{width: '80%', height: '50vh', overflow: 'scroll', margin: '20px auto'}} >
+                        <TableHead >
+                            <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell align="right">Type</TableCell>
+                                <TableCell align="right">Address</TableCell>
+                                <TableCell align="right">Website</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                         { 
                             breweriesToRender.map((brewery)=> {
                                 if (brewery !== null) {
-                                    return <TableRow key={brewery.id} brewery={brewery} />
+                                    return <CityTableRow key={brewery.id} brewery={brewery} />
                                 }
                             })
                         }
-                        </tbody>
-                    </table>
-                </div>
+                        </TableBody>
+                    </Table>
+                </TableContainer >
             ) : (
-                <h2>{loadText}</h2>
+                <Typography variant='h4' component='h2'>{loadText}</Typography>
             )}
         </>
     );

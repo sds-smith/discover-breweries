@@ -27,7 +27,7 @@ export default function ButtonAppBar() {
   const searchCity = async (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault()
     await getSearchCityBreweries(cityToSearch)
-    const city = cityToSearch.replace(' ', '_').toLowerCase()
+    const city = cityToSearch.replace(' ', '-').toLowerCase()
     setCityToSearch('')
     navigate(`/${city}`)
   }

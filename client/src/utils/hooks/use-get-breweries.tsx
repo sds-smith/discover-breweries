@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { httpgetDefaultBreweries, httpGetMyLocalBreweries, httpGetBreweryLatLong, httpGetSearchCityBreweries } from "../http/requests";
 import { ClientContext } from "../../context/client.context";
-import { BreweryContext } from "../../context/brewery.context";
+import { BreweryContext, DEFAULT_LOAD_TEXT } from "../../context/brewery.context";
 import useTrackLocation from './use-track-location';
 
 import { GetBreweryResponseType, defaultBreweryState, defaultCenter } from "../types.utils";
@@ -16,7 +16,7 @@ const useGetBreweries = () => {
     const [breweriesError, setBreweriesError] = useState('');
 
     const {clientLatLong} = useContext(ClientContext);
-    const {hasBreweries, defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
+    const { defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
 
     const {handleTrackLocation} = useTrackLocation();
 
@@ -42,7 +42,7 @@ const useGetBreweries = () => {
         if (message === 'Breweries Retrieved') {
           setSearchCityBreweries(breweries)
           setBreweriesError('')
-          setLoadText('Loading...')
+          setLoadText(DEFAULT_LOAD_TEXT)
         } else {
           setBreweriesError(message)
         }
@@ -67,7 +67,7 @@ const useGetBreweries = () => {
                if (message === 'Breweries Retrieved') {
                 setBreweriesNearMe(breweries)
                 setBreweriesError('')
-                setLoadText('Loading...')
+                setLoadText(DEFAULT_LOAD_TEXT)
                } else {
                 setBreweriesError(message)
                }

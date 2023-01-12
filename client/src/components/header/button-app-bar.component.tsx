@@ -18,7 +18,7 @@ import './header.styles.scss'
 export default function ButtonAppBar() {
   const [cityToSearch, setCityToSearch] = useState('')
   const navigate = useNavigate()
-  const { getMyLocalBreweries, getSearchCityBreweries, breweriesError, getBrewery } = useGetBreweries()
+  const { getMyLocalBreweries, getSearchCityBreweries } = useGetBreweries()
 
   const goHome = () => {
     navigate('/')

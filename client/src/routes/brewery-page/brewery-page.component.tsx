@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import BreweryCard from '../../components/brewery-card/mui-card.component';
+import BreweryCard from '../../components/brewery-card/brewery-card.component';
 
 import './brewery-page.styles.scss';
 

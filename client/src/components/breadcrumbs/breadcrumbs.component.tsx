@@ -45,13 +45,8 @@ const BreadcrumbTrail = () => {
     return links
   }
 
-  useEffect(() => {
-    renderLinks()
-  })
-
   return (
     <Breadcrumbs aria-label="breadcrumb">
-
         {
           renderLinks()
         }

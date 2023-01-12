@@ -1,4 +1,5 @@
 import {FC} from 'react';
+import SportsBarSharpIcon from '@mui/icons-material/SportsBarSharp';
 
 import './map-marker.styles.scss';
 
@@ -11,7 +12,7 @@ type MarkerProps = {
 const Marker: FC<MarkerProps> = ({ text }) => {
     return (
         <div className='markerContainer'>
-            <div className='pointer' />
+            <SportsBarSharpIcon fontSize={'large'} color="primary" />
             <div className='label'>{text}</div>
         </div>
 

@@ -1,4 +1,3 @@
-const path = require('path');
 const axios = require('axios');
 require('dotenv').config();
 
@@ -34,49 +33,14 @@ async function saveBrewery(brewery) {
     });
 };
 
-async function getCityBreweries(city, page, breweryDocs) {
-    const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_city=${city}&per_page=10&page=${page}`);
-    const breweriesResponse = await response.data;
-    breweryDocs.push(...breweriesResponse);
-    if (breweriesResponse.length === 10) {
-        page ++
-        getCityBreweries(city, page, breweryDocs)
-    }
-    return breweryDocs
-}
-
 async function populateBreweriesData() {
     console.log('Downloading breweries data...');
     try {
-        let page = 1;
-        const breweriesArray = []
-        const breweryDocs = await getCityBreweries(DEFAULT_CITY, page, breweriesArray);
+        const response = await getBreweriesByCity(DEFAULT_CITY);
+        const breweryDocs = response.breweriesToReturn
 
         for (const breweryDoc of breweryDocs) {
-            const {id, name, brewery_type, street, city, state, postal_code, website_url, longitude, latitude} = breweryDoc;
-            let longToSet
-            let latToSet
-            if (!longitude || !latitude) {
-                const {data} = await getGeoCode(postal_code)
-                longToSet = data.lng
-                latToSet = data.lat
-            } else {
-                longToSet = longitude
-                latToSet = latitude
-            }
-            const brewery = {
-                id,
-                name,
-                brewery_type,
-                street,
-                city,
-                state,
-                postal_code,
-                website_url,
-                longitude: longToSet,
-                latitude: latToSet
-            }
-            await saveBrewery(brewery)
+            await saveBrewery(breweryDoc)
         };
         return {
             ok: true,
@@ -128,10 +92,21 @@ async function getGeoCode(postal_code) {
     }
 };
 
+async function getCityBreweries(city, page, breweryDocs=[]) {
+    const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_city=${city}&per_page=10&page=${page}`);
+    const breweriesResponse = await response.data;
+    breweryDocs.push(...breweriesResponse);
+    if (breweriesResponse.length === 10) {
+        page ++
+        await getCityBreweries(city, page, breweryDocs)
+    };
+    return breweryDocs;
+};
+
 async function getBreweriesByCity(city) {
     try {
-        const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_city=${city}`);
-        const breweryDocs = await response.data;
+        let page = 1;
+        const breweryDocs = await getCityBreweries(city, page, []);
         const breweriesToReturn = []
         for (const breweryDoc of breweryDocs) {
             const {id, name, brewery_type, street, city, state, postal_code, website_url, longitude, latitude} = breweryDoc;
@@ -167,7 +142,7 @@ async function getBreweriesByCity(city) {
         console.log(err.message)
         return err
     }
-}
+};
 
 async function getSearchCityBreweries(city) {
     const searchCityBreweries = await getBreweriesByCity(city)

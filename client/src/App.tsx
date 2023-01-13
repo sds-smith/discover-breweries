@@ -16,7 +16,6 @@ const App = () => {
                 <Route path='breweries-near-me' element={<BreweriesNearMe />} />
                 <Route path=':city/:id' element={<BreweryPage />} />
                 <Route path=':city' element={<SearchResults />} />
-
             </Route>
         </Routes>
     )

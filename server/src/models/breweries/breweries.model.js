@@ -34,11 +34,24 @@ async function saveBrewery(brewery) {
     });
 };
 
+async function getCityBreweries(city, page, breweryDocs) {
+    const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_city=${city}&per_page=10&page=${page}`);
+    const breweriesResponse = await response.data;
+    breweryDocs.push(...breweriesResponse);
+    if (breweriesResponse.length === 10) {
+        page ++
+        getCityBreweries(city, page, breweryDocs)
+    }
+    return breweryDocs
+}
+
 async function populateBreweriesData() {
     console.log('Downloading breweries data...');
     try {
-        const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_city=${DEFAULT_CITY}`);
-        const breweryDocs = await response.data;
+        let page = 1;
+        const breweriesArray = []
+        const breweryDocs = await getCityBreweries(DEFAULT_CITY, page, breweriesArray);
+
         for (const breweryDoc of breweryDocs) {
             const {id, name, brewery_type, street, city, state, postal_code, website_url, longitude, latitude} = breweryDoc;
             let longToSet

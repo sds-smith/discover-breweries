@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import BreweryMap from '../brewery-map/brewery-map.component';
 import useGetBreweries from '../../utils/hooks/use-get-breweries';

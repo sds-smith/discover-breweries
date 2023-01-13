@@ -33,7 +33,7 @@ const CityTable: FC<CityTableProps> = ({breweriesToRender}) => {
             { hasBreweries(breweriesToRender) ? (
                 <TableContainer >     
                     <Typography variant='h4' component='h2'>{`Breweries near ${city}`}</Typography>
-                    <Table component={Paper} elevation={12} sx={{width: '80%', height: '50vh', overflow: 'scroll', margin: '20px auto'}} >
+                    <Table component={Paper} elevation={12} sx={{width: '80%', height: '50vh', tableLayout: 'fixed', overflow: 'scroll', margin: '20px auto'}} >
                         <TableHead >
                             <TableRow>
                                 <TableCell>Name</TableCell>

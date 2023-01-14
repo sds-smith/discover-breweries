@@ -92,8 +92,14 @@ async function getGeoCode(postal_code) {
     }
 };
 
-async function getCityBreweries(city, page, breweryDocs=[]) {
-    const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_city=${city}&per_page=10&page=${page}`);
+async function getCityBreweries(city, state, page, breweryDocs=[]) {
+    let queryString = '';
+    if (city) queryString += `by_city=${city}`
+    if (state) {
+        if (queryString.length > 0) queryString += '&';
+        queryString += `by_state=${state}`
+    }
+    const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?${queryString}&per_page=10&page=${page}`);
     const breweriesResponse = await response.data;
     breweryDocs.push(...breweriesResponse);
     if (breweriesResponse.length === 10) {
@@ -103,10 +109,10 @@ async function getCityBreweries(city, page, breweryDocs=[]) {
     return breweryDocs;
 };
 
-async function getBreweriesByCity(city) {
+async function getBreweriesByCity(city, state) {
     try {
         let page = 1;
-        const breweryDocs = await getCityBreweries(city, page, []);
+        const breweryDocs = await getCityBreweries(city, state, page, []);
         const breweriesToReturn = []
         for (const breweryDoc of breweryDocs) {
             const {id, name, brewery_type, street, city, state, postal_code, website_url, longitude, latitude} = breweryDoc;
@@ -144,8 +150,8 @@ async function getBreweriesByCity(city) {
     }
 };
 
-async function getSearchCityBreweries(city) {
-    const searchCityBreweries = await getBreweriesByCity(city)
+async function getSearchCityBreweries(city, state) {
+    const searchCityBreweries = await getBreweriesByCity(city, state)
     if (searchCityBreweries.status === 200) {
         return {
             ok: true,

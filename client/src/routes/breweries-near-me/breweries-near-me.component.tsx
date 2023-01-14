@@ -8,7 +8,6 @@ import { BreweryContext } from "../../context/brewery.context";
 import { ClientContext } from "../../context/client.context";
 
 const BreweriesNearMe = () => {
-
     const {hasBreweries, breweriesNearMe} = useContext(BreweryContext);
     const  {locationErrorMsg} = useContext(ClientContext);
 

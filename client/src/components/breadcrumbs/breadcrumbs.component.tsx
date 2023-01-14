@@ -46,7 +46,7 @@ const BreadcrumbTrail = () => {
   }
 
   return (
-    <Breadcrumbs aria-label="breadcrumb">
+    <Breadcrumbs sx={{margin: '10px 0px 0px 30px'}} aria-label="breadcrumb">
         {
           renderLinks()
         }

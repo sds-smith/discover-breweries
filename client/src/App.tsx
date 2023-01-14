@@ -6,6 +6,7 @@ import BreweriesNearMe from "./routes/breweries-near-me/breweries-near-me.compon
 import SearchResults from "./routes/search-results/search-results.component";
 import DefaultCity from "./components/default-city/default-city.component";
 
+import './App.css'
 
 const App = () => {
     return (

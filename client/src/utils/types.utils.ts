@@ -40,3 +40,13 @@ export type GetBreweryResponseType = {
   brewery: BreweryType,
   center: CenterType
 }
+
+export type SearchCityType = {
+    city: string,
+    state?: string
+}
+
+export const defaultSearchCityState = {
+    city: '',
+    state: ''
+}

@@ -17,11 +17,11 @@ const CityTableRow: FC<TableRowProps> = ({brewery}) => {
     const {id, name, brewery_type, street, city, state, postal_code, website_url} = brewery;
 
     return (
-        <TableRow >
-            <TableCell><Link component={RouterLink} className='tableLink' to={id}>{name}</Link></TableCell>
-            <TableCell>{brewery_type}</TableCell>
-            <TableCell>{`${street} ${city}, ${state} ${postal_code}`}</TableCell>
-            <TableCell>
+        <TableRow sx={{height: '50px'}} >
+            <TableCell sx={{height: '50px'}}><Link component={RouterLink} className='tableLink' to={id}>{name}</Link></TableCell>
+            <TableCell sx={{height: '50px'}}>{brewery_type}</TableCell>
+            <TableCell sx={{height: '50px'}}>{`${street} ${city}, ${state} ${postal_code}`}</TableCell>
+            <TableCell sx={{height: '50px'}}>
                 <Link className='tableLink' href={website_url} target='_blank' rel='no-referrer'>{website_url}</Link>
             </TableCell>
         </TableRow>

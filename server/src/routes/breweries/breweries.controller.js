@@ -11,8 +11,8 @@ async function httpgetDefaultBreweries(req, res) {
 };
 
 async function httpGetSearchCityBreweries(req, res) {
-    const {city} = req.query
-    const response = await getSearchCityBreweries(city)
+    const {city, state} = req.query
+    const response = await getSearchCityBreweries(city, state)
     return res.status(response.status).json(response.data)
 };
 

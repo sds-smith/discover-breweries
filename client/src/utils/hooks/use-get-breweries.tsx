@@ -6,7 +6,7 @@ import { ClientContext } from "../../context/client.context";
 import { BreweryContext, DEFAULT_LOAD_TEXT } from "../../context/brewery.context";
 import useTrackLocation from './use-track-location';
 
-import { GetBreweryResponseType, defaultBreweryState, defaultCenter } from "../types.utils";
+import { GetBreweryResponseType, defaultBreweryState, defaultCenter, SearchCityType } from "../types.utils";
 
 
 const useGetBreweries = () => {
@@ -35,7 +35,7 @@ const useGetBreweries = () => {
       }
     };
 
-    const getSearchCityBreweries = async (city: string) => {
+    const getSearchCityBreweries = async (city: SearchCityType) => {
       try {
         const response = await httpGetSearchCityBreweries(city)
         const {message, breweries} = response

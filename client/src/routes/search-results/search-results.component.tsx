@@ -18,7 +18,7 @@ const SearchResults = () => {
     useEffect(() => {
         if (!hasBreweries(searchCityBreweries)) {
             const city = params.city as string
-            getSearchCityBreweries(city);
+            getSearchCityBreweries({city});
         };
     },[])
 

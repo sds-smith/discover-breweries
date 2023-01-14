@@ -66,9 +66,9 @@ const CityTable: FC<CityTableProps> = ({breweriesToRender}) => {
                         </TableHead>
                         <TableBody>
                         { 
-                            breweriesToRender.slice(start, end).map((brewery)=> {
+                            breweriesToRender.slice(start, end).map((brewery, index)=> {
                                 if (brewery !== null) {
-                                    return <CityTableRow key={brewery.id} brewery={brewery} />
+                                    return <CityTableRow key={`${brewery.id}${index}`} brewery={brewery} />
                                 }
                             })
                         }

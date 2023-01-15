@@ -1,6 +1,8 @@
 import { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 
+import Typography from '@mui/material/Typography';
+
 import CityTable from "../../components/city-table/city-table.component";
 
 import useGetBreweries from "../../utils/hooks/use-get-breweries";
@@ -23,13 +25,13 @@ const SearchResults = () => {
     },[])
 
     return (
-        <div>
+        <>
             { locationErrorMsg ? 
-                <div>{`${locationErrorMsg}. Please return to home page.`}</div>
+                <Typography>{`${locationErrorMsg}. Please return to home page.`}</Typography>
                 : 
                 <CityTable breweriesToRender={searchCityBreweries} />
             }
-        </div>
+        </>
     )
 };
 

@@ -1,22 +1,21 @@
 import {FC} from 'react';
 import SportsBarSharpIcon from '@mui/icons-material/SportsBarSharp';
 
-import './map-marker.styles.scss';
+import { MarkerContainer, Label } from './map-marker.styles';
 
 type MarkerProps = {
     text: string,
     lat: number,
     lng: number
-}
+};
 
 const Marker: FC<MarkerProps> = ({ text }) => {
     return (
-        <div className='markerContainer'>
+        <MarkerContainer>
             <SportsBarSharpIcon fontSize={'large'} color="primary" />
-            <div className='label'>{text}</div>
-        </div>
+            <Label variant="caption">{text}</Label>
+        </MarkerContainer>
+    );
+};
 
-    )
-}
-
-export default Marker
+export default Marker;

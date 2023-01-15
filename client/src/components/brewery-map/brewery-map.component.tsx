@@ -4,18 +4,17 @@ import Marker from "../map-marker/map-marker.component";
 
 import { CenterType } from "../../utils/types.utils";
 
-import './brewery-map.styles.scss';
+import {MapContainer} from './brewery-map.styles';
 
 type BreweryMapProps = {
   center: CenterType,
   name: string,
   zoom: number
-}
+};
 
 const BreweryMap: FC<BreweryMapProps> = ({center, name, zoom}) => {
-
   return (
-    <div className='mapContainer' >
+    <MapContainer >
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string }}
         defaultCenter={center}
@@ -27,8 +26,8 @@ const BreweryMap: FC<BreweryMapProps> = ({center, name, zoom}) => {
           lng={center.lng}
         />
       </GoogleMapReact>
-    </div>
+    </MapContainer>
   );
-}
+};
 
-export default BreweryMap
+export default BreweryMap;

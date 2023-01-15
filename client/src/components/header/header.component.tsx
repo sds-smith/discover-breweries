@@ -5,29 +5,24 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider'
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import BeerIcon from '../../assets/Beer-icon.png'
+import BeerIcon from '../../assets/Beer-icon.png';
 import SearchBar from '../search-bar/search-bar.component';
 import useGetBreweries from '../../utils/hooks/use-get-breweries';
 
-import './header.styles.scss'
-
 export default function ButtonAppBar() {
-  const navigate = useNavigate()
-  const { getMyLocalBreweries } = useGetBreweries()
+  const navigate = useNavigate();
+  const { getMyLocalBreweries } = useGetBreweries();
 
   const goHome = () => {
-    navigate('/')
-  }
-
-
-
+    navigate('/');
+  };
 
   const breweriesNearMe = async () => {
-    await getMyLocalBreweries()
-    navigate('/breweries-near-me')
-  }
+    await getMyLocalBreweries();
+    navigate('/breweries-near-me');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -41,7 +36,7 @@ export default function ButtonAppBar() {
             sx={{ mr: 2 }}
             onClick={goHome}
           >
-                <img src={BeerIcon}/>
+            <img src={BeerIcon}/>
           </IconButton>
           <Box sx={{display: 'flex', alignItems: 'center', height: '100%', flexGrow: 1 }}>
             <Typography variant="h6" component="div" >
@@ -58,4 +53,4 @@ export default function ButtonAppBar() {
       </AppBar>
     </Box>
   );
-}
+};

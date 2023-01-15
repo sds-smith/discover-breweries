@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { httpgetDefaultBreweries, httpGetMyLocalBreweries, httpGetBreweryLatLong, httpGetSearchCityBreweries } from "../http/requests";
+import { httpgetDefaultBreweries, httpGetMyLocalBreweries, httpGetSearchCityBreweries } from "../http/requests";
 import { ClientContext } from "../../context/client.context";
 import { BreweryContext, DEFAULT_LOAD_TEXT } from "../../context/brewery.context";
 import useTrackLocation from './use-track-location';
@@ -17,7 +17,7 @@ const useGetBreweries = () => {
 
     const {clientLatLong} = useContext(ClientContext);
     const { defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
-
+    
     const {handleTrackLocation} = useTrackLocation();
 
     const getDefaultBreweries = async () => {
@@ -36,6 +36,7 @@ const useGetBreweries = () => {
     };
 
     const getSearchCityBreweries = async (city: SearchCityType) => {
+      setSearchCityBreweries([null])
       try {
         const response = await httpGetSearchCityBreweries(city)
         const {message, breweries} = response
@@ -89,41 +90,19 @@ const useGetBreweries = () => {
                       searchCityBreweries.find(breweryToFind => breweryToFind !== null && breweryToFind.id === breweryIdToFind) ;
         if (!brewery) {
           navigate('/');
-        }
-        if (brewery && !brewery.latitude || brewery && !brewery.longitude) {
-          const getGeoCode = async () => {
-              try {
-                  const geoResponse = await httpGetBreweryLatLong(brewery.postal_code)
-                  return {
-                    brewery,
-                    center: geoResponse.data
-                  } as GetBreweryResponseType
-              } catch(err) {
-                  console.log(err);
-                  return {
-                    brewery,
-                    center: {lat: 0, lng: 0}
-                  } as GetBreweryResponseType
-              }
-          };
-          getGeoCode();
-      } else {
-          if (brewery) {
-            return {
-              brewery, 
-              center: {
-                lat: Number(brewery.latitude),
-                lng: Number(brewery.longitude)
-              }
-            } as GetBreweryResponseType
-          }
           return {
             brewery: defaultBreweryState,
             center: defaultCenter
           } as GetBreweryResponseType
-      }
+        }
+        return {
+          brewery, 
+          center: {
+            lat: Number(brewery.latitude),
+            lng: Number(brewery.longitude)
+          }
+        } as GetBreweryResponseType
     } 
-
     return {
         getDefaultBreweries,
         getMyLocalBreweries,

@@ -19,20 +19,6 @@ async function loadBreweriesData() {
     };
 };
 
-async function findBrewery(filter) {
-    return await breweries.findOne(filter)
-};
-
-async function saveBrewery(brewery) {
-    await breweries.findOneAndUpdate({
-        id: brewery.id
-    },
-    brewery,
-    {
-        upsert: true
-    });
-};
-
 async function populateBreweriesData() {
     console.log('Downloading breweries data...');
     try {
@@ -54,7 +40,6 @@ async function populateBreweriesData() {
             message: err.message
         } 
     }
-
 };
 
 async function getDefaultBreweries() {
@@ -65,54 +50,59 @@ async function getDefaultBreweries() {
         })
 };
 
-//External API functions
-async function getGeoCode(postal_code) {
+async function findBrewery(filter) {
+    return await breweries.findOne(filter)
+};
+
+async function saveBrewery(brewery) {
+    await breweries.findOneAndUpdate({
+        id: brewery.id
+    },
+    brewery,
+    {
+        upsert: true
+    });
+};
+
+//Intermediate and Helper functions
+async function getBreweriesByCity(city, state) {
     try {
-        const geoResponse = await axios.get(
-            `${GOOGLE_MAPS_API_BASE_URL}/geocode/json?components=postal_code:${postal_code}&key=${process.env.GOOGLE_MAPS_API_KEY}`
-        );
-        const {lat, lng} = await geoResponse.data.results[0].geometry.location;
+        const breweryDocs = await getCityBreweries(city, state);
+        const {breweriesToReturn} = await transformBreweryData(breweryDocs);
+        return {
+            status: 200,
+            breweriesToReturn
+        }
+    } catch (err) {
+        console.log(err.message)
+        return err
+    }
+};
+
+async function getSearchCityBreweries(city, state) {
+    const searchCityBreweries = await getBreweriesByCity(city, state)
+    if (searchCityBreweries.status === 200) {
         return {
             ok: true,
-            status: 200,
+            status: searchCityBreweries.status,
             data: {
-                message: "lat long retrieved",
-                lat: Number(lat),
-                lng: Number(lng)
+                breweries: searchCityBreweries.breweriesToReturn,
+                message: `Breweries Retrieved`
             }
-        };
-    } catch(err) {
+        }
+    } else {
         return {
             ok: false,
             status: 500,
             data: {
-                message: err.message
+                message: searchCityBreweries.message
             }
-        } 
+        }
     }
-};
+}
 
-async function getCityBreweries(city, state, page, breweryDocs=[]) {
-    let queryString = '';
-    if (city) queryString += `by_city=${city}`
-    if (state) {
-        if (queryString.length > 0) queryString += '&';
-        queryString += `by_state=${state}`
-    }
-    const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?${queryString}&per_page=10&page=${page}`);
-    const breweriesResponse = await response.data;
-    breweryDocs.push(...breweriesResponse);
-    if (breweriesResponse.length === 10) {
-        page ++
-        await getCityBreweries(city, page, breweryDocs)
-    };
-    return breweryDocs;
-};
-
-async function getBreweriesByCity(city, state) {
+async function transformBreweryData(breweryDocs) {
     try {
-        let page = 1;
-        const breweryDocs = await getCityBreweries(city, state, page, []);
         const breweriesToReturn = []
         for (const breweryDoc of breweryDocs) {
             const {id, name, brewery_type, street, city, state, postal_code, website_url, longitude, latitude} = breweryDoc;
@@ -148,40 +138,63 @@ async function getBreweriesByCity(city, state) {
         console.log(err.message)
         return err
     }
-};
+}
 
-async function getSearchCityBreweries(city, state) {
-    const searchCityBreweries = await getBreweriesByCity(city, state)
-    if (searchCityBreweries.status === 200) {
+//External API functions
+async function getGeoCode(postal_code) {
+    try {
+        const geoResponse = await axios.get(
+            `${GOOGLE_MAPS_API_BASE_URL}/geocode/json?components=postal_code:${postal_code}&key=${process.env.GOOGLE_MAPS_API_KEY}`
+        );
+        const {lat, lng} = await geoResponse.data.results[0].geometry.location;
         return {
             ok: true,
-            status: searchCityBreweries.status,
+            status: 200,
             data: {
-                breweries: searchCityBreweries.breweriesToReturn,
-                message: `Breweries Retrieved`
+                message: "lat long retrieved",
+                lat: Number(lat),
+                lng: Number(lng)
             }
-        }
-    } else {
+        };
+    } catch(err) {
         return {
             ok: false,
             status: 500,
             data: {
-                message: searchCityBreweries.message
+                message: err.message
             }
-        }
+        } 
     }
-}
+};
+
+async function getCityBreweries(city, state, page=1, breweryDocs=[]) {
+    let queryString = '';
+    if (city) queryString += `by_city=${city}`
+    if (state) {
+        if (queryString.length > 0) queryString += '&';
+        queryString += `by_state=${state}`
+    }
+    const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?${queryString}&per_page=10&page=${page}`);
+    const breweriesResponse = await response.data;
+    breweryDocs.push(...breweriesResponse);
+    if (breweriesResponse.length === 10) {
+        page ++
+        await getCityBreweries(city, page, breweryDocs)
+    };
+    return breweryDocs;
+};
 
 async function getBreweriesNearMe(latLong) {
     try {
         const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_dist=${latLong}`);
         const breweries = await response.data;
+        const {breweriesToReturn} = await transformBreweryData(breweries)
         return {
             ok: true,
             status: 200,
             data: {
                 message: "Breweries Retrieved",
-                breweries
+                breweries: breweriesToReturn
             }
         }
     } catch(err) {
@@ -193,7 +206,7 @@ async function getBreweriesNearMe(latLong) {
             }
         }
     }
-}
+};
 
 module.exports = {
     loadBreweriesData,

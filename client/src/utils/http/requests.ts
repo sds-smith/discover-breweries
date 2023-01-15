@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SearchCityType } from '../types.utils';
 
-const API_BASE_URL='v1';
+const API_BASE_URL='http://localhost/v1';
 
 export async function httpGetSearchCityBreweries(city: SearchCityType) {
     let queryString = '';
@@ -35,12 +35,3 @@ export async function httpgetDefaultBreweries() {
         return err
     }
 };
-
-export async function httpGetBreweryLatLong(postal_code: string) {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/breweries/get_geocode?postal_code=${postal_code}`)
-        return response.data
-    } catch(err) {
-        return err
-    }
-}

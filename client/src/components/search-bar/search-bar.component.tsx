@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -12,8 +12,8 @@ import { defaultSearchCityState } from '../../utils/types.utils';
 import {STATES} from '../../assets/data/states.js';
 
 const transformStateName = (stateName: string) => {
-    return stateName.toLowerCase().replace(' ', '_')
-}
+    return stateName.toLowerCase().replace(' ', '_');
+};
 
 const SearchBar = () => {
     const [searchParams, setSearchParams] = useState(defaultSearchCityState);
@@ -24,34 +24,34 @@ const SearchBar = () => {
         setSearchParams({
           city: e.target.value,
           state: searchParams.state
-        })
-    }
+        });
+    };
     
     const onChangeSearchState = (e: SelectChangeEvent) => {
       setSearchParams({
         state: e.target.value,
         city: searchParams.city
-      })    
-    }
+      });
+    };
 
     const searchCity = async (e: FormEvent<HTMLInputElement>) => {
-      e.preventDefault()
-      await getSearchCityBreweries(searchParams)
-      const city = searchParams.city.replace(' ', '-').toLowerCase()
-      setSearchParams(defaultSearchCityState)
-      navigate(`/${city}`)
-    }
+      e.preventDefault();
+      const city = searchParams.city.replace(' ', '-').toLowerCase();
+      navigate(`/${city}`);
+      await getSearchCityBreweries(searchParams);
+      setSearchParams(defaultSearchCityState);
+    };
 
     const renderMenuItems = () => {
         return [
-          <MenuItem disabled value="">
+          <MenuItem key='placeholder' disabled value="">
            <em>State</em>
           </MenuItem>,
           ...STATES.map(state => (
-            <MenuItem value={transformStateName(state.name)}>{state.abbreviation}</MenuItem>
+            <MenuItem key={state.abbreviation} value={transformStateName(state.name)}>{state.abbreviation}</MenuItem>
           ))
-        ]
-    }
+        ];
+    };
     
     return (
         <Box component='form' onSubmit={searchCity}>
@@ -84,7 +84,7 @@ const SearchBar = () => {
             />
             <Button type='submit' sx={{height: '0px'}}></Button>
         </Box>
-    )
-}
+    );
+};
 
-export default SearchBar
+export default SearchBar;

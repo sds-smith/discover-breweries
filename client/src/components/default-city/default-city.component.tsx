@@ -6,17 +6,17 @@ import { BreweryContext } from "../../context/brewery.context";
 
 const DefaultCity = () => {
     const {defaultBreweries, hasBreweries} = useContext(BreweryContext);
-    const {getDefaultBreweries} = useGetBreweries()
+    const {getDefaultBreweries} = useGetBreweries();
 
     useEffect(() => {
         if (!hasBreweries(defaultBreweries)) {
-            getDefaultBreweries()
-        }
+            getDefaultBreweries();
+        };
     }, []);
 
     return (
         <CityTable breweriesToRender={defaultBreweries}/>
-    )
-}
+    );
+};
 
-export default DefaultCity
+export default DefaultCity;

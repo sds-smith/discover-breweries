@@ -12,11 +12,10 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
 const encode = (street: string, city: string, state: string, postal_code: string): string => {
-  return street.replace(' ', '+').concat('+',city,'+',state,'+',postal_code)
-}
+  return street.replace(' ', '+').concat('+',city,'+',state,'+',postal_code);
+};
 
 export default function MediaCard() {
-
     const [brewery, setBrewery] = useState<BreweryType>(defaultBreweryState);
     const [center, setCenter] = useState<CenterType>(defaultCenter);
  
@@ -24,17 +23,18 @@ export default function MediaCard() {
 
     const {getBrewery} = useGetBreweries();
 
-    const {clientLatLong} = useContext(ClientContext)
+    const {clientLatLong} = useContext(ClientContext);
     const google_maps_base_url = clientLatLong ? 
       `https://www.google.com/maps/dir/${clientLatLong}/` :
-      'https://www.google.com/maps/place/'
+      'https://www.google.com/maps/place/';
+
+    const mapParams = street && city && state && postal_code ? encode(street,city,state,postal_code) : '';
 
     useEffect(() => {
         const {brewery, center} = getBrewery() as GetBreweryResponseType;
-
         brewery && setBrewery(brewery);
         center && setCenter(center);
-    }, [])
+    }, []);
 
   return (
     <Card raised sx={{ maxWidth: '80vw', margin: '40px auto' }}>
@@ -57,12 +57,12 @@ export default function MediaCard() {
           </Link>
         </Button>
         <Button size="small">
-          <Link href={`${google_maps_base_url}${encode(street,city,state,postal_code)}`} target='_blank' rel='no-referrer'>
+          <Link href={`${google_maps_base_url}${mapParams}`} target='_blank' rel='no-referrer'>
             Get Directions
           </Link>
         </Button>
       </CardActions>
     </Card>
   );
-}
+};
 

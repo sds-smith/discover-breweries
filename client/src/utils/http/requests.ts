@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SearchCityType } from '../types.utils';
 
-const API_BASE_URL='http://localhost/v1';
+const API_BASE_URL='v1';
 
 export async function httpGetSearchCityBreweries(city: SearchCityType) {
     let queryString = '';

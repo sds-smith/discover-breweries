@@ -1,4 +1,4 @@
-# Discover Breweries 2
+# Discover Breweries 2.0
 
 A brewery locator app built for the [RSM HCD Coding Challenge](<https://rsm-hcd-coding-challenge.s3.amazonaws.com/requirements/RSM+HCD+Coding+Challenge+Instructions+(1).pdf>) and powered by the [OpenBreweryDB API](https://www.openbrewerydb.org/documentation).
 
@@ -16,11 +16,13 @@ A brewery locator app built for the [RSM HCD Coding Challenge](<https://rsm-hcd-
 - Axios for http requests (client to server and server to external api)
 - Google-map-react for Google Maps integration
 - Material UI Component Library
-- SCSS for Styling
+- CSS-in-JS (emotion) for styling
 - Mongoose for MongoDB integration
 - Docker for containerizing the app for shipping
 
 ## Demo the App
+
+The app is hosted live at [https://dgx0klc0yfelo.cloudfront.net](https://dgx0klc0yfelo.cloudfront.net). Feel free to try it out.
 
 ## UI/UX Flow
 
@@ -36,22 +38,25 @@ Within the list, the user is able to:
 - Click on any brewery name to be routed to an individual brewery page displaying location information, including name, address, and a map indicating the brewery's location using latitude and longitude.
 - Click on any brewery url to open the brewery's website in a new tab.
 
-From any route in the App, the user will see a persistent header containing two navigation elements:
+From any route in the App, the user will see a persistent header containing two navigation buttons:
 
-- Beer mug icon - returns to the home page
+- Home - returns to the home page
 - Find Breweries Near Me - leverages the browser's built-in Geolocation API (with the user's explicit permission) to display a list of breweries closest to the client's location, returned from OpenBreweryDB.
 
-From any individual brewery page, the user can select a breadcrumbs link to return to the list from which they originally navigated to the brewery page.
+The header also contains a search bar where the user is able to search breweries by city (required) with optional State parameter.
+
+Additional navigation is provided through a breadcrumb trail directly below the header.
 
 ## Server-side functionality
 
 The versionable REST API follows the MVC design pattern and is accessed through the `/v1` path. It consists of one router (BreweriesRouter) at `v1/breweries`.
 
-BreweriesRouter contains three endpoints:
+BreweriesRouter contains four endpoints:
 
 - `'/default_city'` returns the default list of breweries for display on the home page. This list is generated from OpenBreweryDB and is persisted in a MongoDB Cluster.
 - `'/get_geocode?[BREWERY_POSTAL_CODE]'` returns the latitude and longitude for any brewery that is missing that data in OpenBreweryDB. A request is sent to the Google Maps API.
 - `'/by-dist?[CLIENT_GEOLOCATION_DATA]'` returns a list of breweries closest to the user's current location. A request is sent to the OpenBreweryDB API.
+- `'/search?[CITY]'` returns a list of breweries in the city requested by the user in the search bar.
 
 ## Deployment and Hosting
 

@@ -11,7 +11,7 @@ import useGetBreweries from '../../utils/hooks/use-get-breweries';
 import { defaultSearchCityState } from '../../utils/types.utils';
 import {STATES} from '../../assets/data/states.js';
 
-const transformStateName = (stateName: string) => {
+const transform = (stateName: string) => {
     return stateName.toLowerCase().replace(' ', '_');
 };
 
@@ -48,7 +48,7 @@ const SearchBar = () => {
            <em>State</em>
           </MenuItem>,
           ...STATES.map(state => (
-            <MenuItem key={state.abbreviation} value={transformStateName(state.name)}>{state.abbreviation}</MenuItem>
+            <MenuItem key={state.abbreviation} value={transform(state.name)}>{state.abbreviation}</MenuItem>
           ))
         ];
     };

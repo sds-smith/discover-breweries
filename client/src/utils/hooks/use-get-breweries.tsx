@@ -56,7 +56,7 @@ const useGetBreweries = () => {
           setBreweriesError(`Error getting breweries ${err}`)
         }
       }
-      navigate(`/${city.city}`)
+      navigate(`/${city.city.replace(' ', '-').toLowerCase()}`)
     }
 
     const getMyLocalBreweries = async () => {

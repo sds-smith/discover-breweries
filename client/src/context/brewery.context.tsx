@@ -10,7 +10,9 @@ export const BreweryContext = createContext<BreweryContextProps>({
     searchCityBreweries: [null],
     setSearchCityBreweries: ()=>{},
     loadText: '',
-    setLoadText: ()=>{},
+    setLoadText: ()=>{},    
+    defaultCity: '',
+    setDefaultCity: ()=>{},
     hasBreweries: ()=>false
 });
 
@@ -21,6 +23,7 @@ export const BreweryProvider: FC<ProviderProps> = ({children}) => {
     const [breweriesNearMe, setBreweriesNearMe] = useState<BreweryArray>([null]);
     const [searchCityBreweries, setSearchCityBreweries] = useState<BreweryArray>([null]);
     const [loadText, setLoadText] = useState<string>(DEFAULT_LOAD_TEXT);
+    const [defaultCity, setDefaultCity] = useState<string>('')
 
     const hasBreweries = (array: BreweryArray): boolean => {
         return array[0] !== null
@@ -35,6 +38,8 @@ export const BreweryProvider: FC<ProviderProps> = ({children}) => {
         setSearchCityBreweries,
         loadText,
         setLoadText,
+        defaultCity,
+        setDefaultCity,
         hasBreweries
     }
 

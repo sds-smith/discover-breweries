@@ -15,7 +15,7 @@ const transform = (stateName: string) => {
     return stateName.toLowerCase().replace(' ', '_');
 };
 
-const SearchBar = () => {
+const SearchBar = ({styles={backgroundColor: 'unset', color: 'white', margin: 'unset'}}) => {
     const [searchParams, setSearchParams] = useState(defaultSearchCityState);
     const navigate = useNavigate();
     const {getSearchCityBreweries} = useGetBreweries();
@@ -54,15 +54,15 @@ const SearchBar = () => {
     };
     
     return (
-        <Box component='form' onSubmit={searchCity}>
-          <FormControl fullWidth size='small' variant='standard' sx={{margin: '20px 0 0 30px', height: '50%'}}  >
+        <Box component='form' onSubmit={searchCity} sx={styles}>
+          <FormControl size='small' variant='standard' sx={{margin: '20px 0 0 30px', width: '80%', height: '50%'}}  >
             <Select
               displayEmpty
               id="demo-simple-select"
               value={searchParams.state}
               label="State"
               onChange={onChangeSearchState}
-              sx={{color: 'white', width: '100%', opacity: '.5'}}
+              sx={{color: styles.color, width: '100%', opacity: '.5'}}
             >
               {
                   renderMenuItems()    
@@ -71,16 +71,15 @@ const SearchBar = () => {
           </FormControl>
           <TextField 
                   required
-                  fullWidth
                   onChange={onChangeSearchCity}
                   value={searchParams.city}
                   size='small' 
-                  inputProps={{sx: {color: 'white'}}} 
+                  inputProps={{sx: {color: styles.color}}} 
                   margin='dense' 
                   id="standard-basic" 
                   placeholder='City' 
                   variant="standard" 
-                  sx={{margin: '10px 0 0 30px'}}
+                  sx={{margin: '10px 0 0 30px', width: '80%'}}
             />
             <Button type='submit' sx={{height: '0px'}}></Button>
         </Box>

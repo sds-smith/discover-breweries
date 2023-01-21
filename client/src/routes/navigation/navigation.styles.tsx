@@ -18,7 +18,7 @@ export const NavigationContainer = styled.div<NavigationContainerProps>`
         top: 0;
         width: 100%;
         height: 100%;
-        background-image: ${props => props.imageToDisplay === 1 ? `url(${primaryImage})` : `url(${secondaryImage})`};
+        background-image: ${props => props.imageToDisplay <= 1 ? `url(${primaryImage})` : `url(${secondaryImage})`};
         background-position: 0 0;
         background-size:cover;
         background-repeat: no-repeat;

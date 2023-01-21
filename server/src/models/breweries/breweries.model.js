@@ -43,11 +43,15 @@ async function populateBreweriesData() {
 };
 
 async function getDefaultBreweries() {
-        return await breweries
+        const breweriesToReturn = await breweries
         .find({}, {
             '_id': 0,
             '__v': 0
         })
+        return {
+            DEFAULT_CITY,
+            breweries: breweriesToReturn
+        }
 };
 
 async function findBrewery(filter) {
@@ -211,7 +215,6 @@ async function getBreweriesNearMe(latLong) {
 module.exports = {
     loadBreweriesData,
     getDefaultBreweries,
-    getGeoCode,
     getSearchCityBreweries,
     getBreweriesNearMe
 }

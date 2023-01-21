@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,8 +8,11 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import BeerIcon from '../../assets/Beer-icon.png';
+
 import SearchBar from '../search-bar/search-bar.component';
+import ButtonBreweriesNearMe from '../button-breweries-near-me/button-breweries-near-me.component';
+
+import BeerIcon from '../../assets/Beer-icon.png';
 import useGetBreweries from '../../utils/hooks/use-get-breweries';
 
 export default function ButtonAppBar() {
@@ -47,7 +51,7 @@ export default function ButtonAppBar() {
           <ButtonGroup variant='text' aria-label="text button group" >
             <Button onClick={goHome} color="inherit">Home</Button>
             <Divider orientation='vertical' />
-            <Button onClick={breweriesNearMe} color="inherit">Find Breweries Near Me</Button>
+            <ButtonBreweriesNearMe variant='text' />
           </ButtonGroup>
         </Toolbar>
       </AppBar>

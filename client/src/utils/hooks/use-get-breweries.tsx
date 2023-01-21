@@ -16,14 +16,15 @@ const useGetBreweries = () => {
     const [breweriesError, setBreweriesError] = useState('');
 
     const {clientLatLong} = useContext(ClientContext);
-    const { defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
+    const { setDefaultCity, defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
     
     const {handleTrackLocation} = useTrackLocation();
 
     const getDefaultBreweries = async () => {
       try {
-          const breweries = await httpgetDefaultBreweries();
+          const {breweries, DEFAULT_CITY} = await httpgetDefaultBreweries();
           setDefaultBreweries(breweries)
+          setDefaultCity(DEFAULT_CITY)
       } catch (err) {
           if (err instanceof Error) {
               console.log(err.message)

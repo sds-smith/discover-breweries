@@ -1,19 +1,21 @@
 import { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+
+import CityGrid from "../../components/city-grid/city-grid.component";
+import ActionBanner from "../../components/action-banner/action-banner.component";
+
 import { ClientContext } from "../../context/client.context";
 
 const Home = () => {
-    const navigate = useNavigate()
     const {setLocationErrorMsg} = useContext(ClientContext);
 
     useEffect(() => {
       setLocationErrorMsg('');
-      navigate('/asheville')
     }, [])
 
     return (
         <div>
-          Loading...
+          <CityGrid />
+          <ActionBanner />
         </div>
     )
 }

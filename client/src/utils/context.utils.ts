@@ -10,7 +10,9 @@ export type BreweryContextProps = {
     searchCityBreweries: BreweryArray;
     setSearchCityBreweries(searchCityBreweries: BreweryArray): void;
     loadText: string;
-    setLoadText(loadText: string): void;
+    setLoadText(loadText: string): void;    
+    defaultCity: string;
+    setDefaultCity(defaultCity: string): void;
     hasBreweries(array: BreweryArray): boolean
 }
 

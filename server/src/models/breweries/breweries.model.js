@@ -1,16 +1,38 @@
-const axios = require('axios');
 require('dotenv').config();
 
-const breweries = require('./breweries.mongo');
+const {cities, breweries} = require('./breweries.mongo');
+const { getAllBreweries, getBreweriesByCity } = require('../open-brewery-db/open-brewery-db.model')
 
-const OPEN_BREWERY_DB_BASE_URL = 'https://api.openbrewerydb.org/breweries';
-const DEFAULT_CITY='asheville';
-const GOOGLE_MAPS_API_BASE_URL=`https://maps.googleapis.com/maps/api`
+let DEFAULT_CITY='asheville';
+let YESTERDAYS_CITY
+let CITIES_COUNT
+const INTERVAL = 1000 * 60 * 60 * 24
+
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  function transform(string) {
+    return string.split(' ').map(word => capitalize(word)).join(' ')
+  };
 
 //Mongo Functions
-async function loadBreweriesData() {
+async function loadCitiesData() {
+    const citiesCount = await cities.count();
+    if (citiesCount) {
+        CITIES_COUNT = citiesCount
+        console.log('City data already loaded!');
+    } else {
+        await populateCitiesData();
+        CITIES_COUNT = await cities.count();
+    };
+    startClock()
+};
+
+async function loadBreweriesData() { 
     const checkBrewery = await findBrewery({
-        id: "archetype-brewing-asheville"
+        city: capitalize(DEFAULT_CITY)
     });
     if (checkBrewery) {
         console.log('Brewery data already loaded!');
@@ -19,9 +41,41 @@ async function loadBreweriesData() {
     };
 };
 
+async function populateCitiesData() {
+    console.log('Downloading cities data...');
+    try {
+        const breweryDocs = await getAllBreweries();
+
+        let id = 0;
+        for (const breweryDoc of breweryDocs) {
+            const {city, country} = breweryDoc;
+            if (country === "United States") {
+                const saved = await saveCity({
+                    name: city,
+                    id
+                });
+                if (saved) id ++
+            }
+        };
+
+        return {
+            ok: true,
+            status: 201
+        }
+    } catch (err) {
+        console.log(err.message)
+        return {
+            ok: false,
+            status: 500,
+            message: err.message
+        } 
+    }
+};
+
 async function populateBreweriesData() {
     console.log('Downloading breweries data...');
     try {
+        await clearDefaultBreweries();
         const response = await getBreweriesByCity(DEFAULT_CITY);
         const breweryDocs = response.breweriesToReturn
 
@@ -42,6 +96,19 @@ async function populateBreweriesData() {
     }
 };
 
+function startClock() {
+    console.log('starting clock')
+    setInterval(async () => {
+        const defaultCityId = Math.floor(Math.random() * CITIES_COUNT).toString();
+        console.log({CITIES_COUNT,defaultCityId})
+        const city = await findCity({id: defaultCityId})
+        console.log({city})
+        YESTERDAYS_CITY = DEFAULT_CITY
+        DEFAULT_CITY = city.name.toLowerCase();
+        await loadBreweriesData();
+    }, INTERVAL)
+}
+
 async function getDefaultBreweries() {
         const breweriesToReturn = await breweries
         .find({}, {
@@ -54,9 +121,40 @@ async function getDefaultBreweries() {
         }
 };
 
+async function clearDefaultBreweries() {
+    console.log({YESTERDAYS_CITY})
+    if (YESTERDAYS_CITY) {
+        await breweries.deleteMany({
+            city: transform(YESTERDAYS_CITY)
+        });
+    }
+};
+
+async function findCity(filter) {
+    return await cities.findOne(filter)
+};
+
 async function findBrewery(filter) {
     return await breweries.findOne(filter)
 };
+
+async function saveCity(city) {
+    const foundCity = await cities.findOne({
+        name: city.name
+    }).exec();
+    if (!foundCity) {
+        console.log(`saving ${city.name}`)
+        await cities.findOneAndUpdate({
+            name: city.name
+        },
+        city,
+        {
+            upsert: true
+        });
+        return true
+    }
+    return false
+}
 
 async function saveBrewery(brewery) {
     await breweries.findOneAndUpdate({
@@ -68,153 +166,9 @@ async function saveBrewery(brewery) {
     });
 };
 
-//Intermediate and Helper functions
-async function getBreweriesByCity(city, state) {
-    try {
-        const breweryDocs = await getCityBreweries(city, state);
-        const {breweriesToReturn} = await transformBreweryData(breweryDocs);
-        return {
-            status: 200,
-            breweriesToReturn
-        }
-    } catch (err) {
-        console.log(err.message)
-        return err
-    }
-};
-
-async function getSearchCityBreweries(city, state) {
-    const searchCityBreweries = await getBreweriesByCity(city, state)
-    if (searchCityBreweries.status === 200) {
-        return {
-            ok: true,
-            status: searchCityBreweries.status,
-            data: {
-                breweries: searchCityBreweries.breweriesToReturn,
-                message: `Breweries Retrieved`
-            }
-        }
-    } else {
-        return {
-            ok: false,
-            status: 500,
-            data: {
-                message: searchCityBreweries.message
-            }
-        }
-    }
-}
-
-async function transformBreweryData(breweryDocs) {
-    try {
-        const breweriesToReturn = []
-        for (const breweryDoc of breweryDocs) {
-            const {id, name, brewery_type, street, city, state, postal_code, website_url, longitude, latitude} = breweryDoc;
-            let longToSet
-            let latToSet
-            if (!longitude || !latitude) {
-                const {data} = await getGeoCode(postal_code)
-                longToSet = data.lng
-                latToSet = data.lat
-            } else {
-                longToSet = longitude
-                latToSet = latitude
-            }
-            const brewery = {
-                id,
-                name,
-                brewery_type,
-                street,
-                city,
-                state,
-                postal_code,
-                website_url,
-                longitude: longToSet,
-                latitude: latToSet
-            }
-            breweriesToReturn.push(brewery)
-        };
-        return {
-            status: 200,
-            breweriesToReturn
-        }
-    } catch (err) {
-        console.log(err.message)
-        return err
-    }
-}
-
-//External API functions
-async function getGeoCode(postal_code) {
-    try {
-        const geoResponse = await axios.get(
-            `${GOOGLE_MAPS_API_BASE_URL}/geocode/json?components=postal_code:${postal_code}&key=${process.env.GOOGLE_MAPS_API_KEY}`
-        );
-        const {lat, lng} = await geoResponse.data.results[0].geometry.location;
-        return {
-            ok: true,
-            status: 200,
-            data: {
-                message: "lat long retrieved",
-                lat: Number(lat),
-                lng: Number(lng)
-            }
-        };
-    } catch(err) {
-        return {
-            ok: false,
-            status: 500,
-            data: {
-                message: err.message
-            }
-        } 
-    }
-};
-
-async function getCityBreweries(city, state, page=1, breweryDocs=[]) {
-    let queryString = '';
-    if (city) queryString += `by_city=${city}`
-    if (state) {
-        if (queryString.length > 0) queryString += '&';
-        queryString += `by_state=${state}`
-    }
-    const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?${queryString}&per_page=10&page=${page}`);
-    const breweriesResponse = await response.data;
-    breweryDocs.push(...breweriesResponse);
-    if (breweriesResponse.length === 10) {
-        page ++
-        await getCityBreweries(city, page, breweryDocs)
-    };
-    return breweryDocs;
-};
-
-async function getBreweriesNearMe(latLong) {
-    try {
-        const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_dist=${latLong}`);
-        const breweries = await response.data;
-        const {breweriesToReturn} = await transformBreweryData(breweries)
-        return {
-            ok: true,
-            status: 200,
-            data: {
-                message: "Breweries Retrieved",
-                breweries: breweriesToReturn
-            }
-        }
-    } catch(err) {
-        return {
-            ok: false,
-            status: 500,
-            data: {
-                message: err.message
-            }
-        }
-    }
-};
-
 module.exports = {
+    loadCitiesData,
     loadBreweriesData,
+    startClock,
     getDefaultBreweries,
-    getSearchCityBreweries,
-    getBreweriesNearMe
 }

@@ -1,8 +1,11 @@
 const {
     getDefaultBreweries,
+} = require('../../models/breweries/breweries.model');
+
+const {
     getBreweriesNearMe,
     getSearchCityBreweries
-} = require('../../models/breweries/breweries.model');
+} = require('../../models/open-brewery-db/open-brewery-db.model');
 
 async function httpgetDefaultBreweries(req, res) {
     const response = await getDefaultBreweries()

@@ -11,9 +11,7 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
-const encode = (street: string, city: string, state: string, postal_code: string): string => {
-  return street.replace(' ', '+').concat('+',city,'+',state,'+',postal_code);
-};
+import { encodeMapParams } from '../../utils';
 
 export default function MediaCard() {
     const [brewery, setBrewery] = useState<BreweryType>(defaultBreweryState);
@@ -28,7 +26,7 @@ export default function MediaCard() {
       `https://www.google.com/maps/dir/${clientLatLong}/` :
       'https://www.google.com/maps/place/';
 
-    const mapParams = street && city && state && postal_code ? encode(street,city,state,postal_code) : '';
+    const mapParams = street && city && state && postal_code ? encodeMapParams(street,city,state,postal_code) : '';
 
     useEffect(() => {
         const {brewery, center} = getBrewery() as GetBreweryResponseType;
@@ -37,7 +35,7 @@ export default function MediaCard() {
     }, []);
 
   return (
-    <Card raised sx={{ maxWidth: '80vw', margin: '40px auto' }}>
+    <Card raised sx={{ maxWidth: '80vw', margin: '80px auto' }}>
       <BreweryMap center={center} name={name} zoom={15}/>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

@@ -1,7 +1,8 @@
 import { useEffect, useContext } from "react";
 
+import Banner from "../../components/banner/banner.component";
 import CityGrid from "../../components/city-grid/city-grid.component";
-import ActionBanner from "../../components/action-banner/action-banner.component";
+import ActionBox from "../../components/action-box/action-box.component";
 
 import { ClientContext } from "../../context/client.context";
 
@@ -14,8 +15,9 @@ const Home = () => {
 
     return (
         <div>
+          <Banner />
           <CityGrid />
-          <ActionBanner />
+          <ActionBox />
         </div>
     )
 }

@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const citySchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    }
+});
+
 const brewerySchema = new mongoose.Schema({
     id: {
         type: String,
@@ -35,4 +46,8 @@ const brewerySchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Brewery', brewerySchema)
+module.exports = {
+    breweries: mongoose.model('Brewery', brewerySchema),
+    cities: mongoose.model('City', citySchema)
+
+}

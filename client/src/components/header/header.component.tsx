@@ -13,19 +13,12 @@ import SearchBar from '../search-bar/search-bar.component';
 import ButtonBreweriesNearMe from '../button-breweries-near-me/button-breweries-near-me.component';
 
 import BeerIcon from '../../assets/Beer-icon.png';
-import useGetBreweries from '../../utils/hooks/use-get-breweries';
 
 export default function ButtonAppBar() {
   const navigate = useNavigate();
-  const { getMyLocalBreweries } = useGetBreweries();
 
   const goHome = () => {
     navigate('/');
-  };
-
-  const breweriesNearMe = async () => {
-    await getMyLocalBreweries();
-    navigate('/breweries-near-me');
   };
 
   return (
@@ -49,8 +42,7 @@ export default function ButtonAppBar() {
             <SearchBar />
           </Box>
           <ButtonGroup variant='text' aria-label="text button group" >
-            <Button onClick={goHome} color="inherit">Home</Button>
-            <Divider orientation='vertical' />
+            <Button onClick={goHome} color="inherit" sx={{margin: '30px auto'}}>Home</Button>
             <ButtonBreweriesNearMe variant='text' />
           </ButtonGroup>
         </Toolbar>

@@ -4,16 +4,9 @@ import Breadcrumbs from "@mui/material/Breadcrumbs"
 import Link from "@mui/material/Link"
 import Typography from "@mui/material/Typography"
 
+import { transformLabel } from '../../utils'
+
 type linksArrayType = ReactNode[];
-
-function capitalize(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-function transformLabel(string: string) {
-  const s = string.split('-');
-  return s.map((word) => capitalize(word)).join(' ');
-};
 
 const BreadcrumbTrail = () => {
   const location = useLocation();

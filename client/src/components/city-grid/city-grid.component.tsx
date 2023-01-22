@@ -6,11 +6,9 @@ import Link from '@mui/material/Link';
 import { BreweryContext } from '../../context/brewery.context';
 import useGetBreweries from '../../utils/hooks/use-get-breweries';
 
-import { CityGridContainer, CustomGrid } from './city-grid.styles';
+import { capitalizeAll, encodePath } from '../../utils';
 
-function capitalize(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  };
+import { CityGridContainer, CustomGrid } from './city-grid.styles';
 
 const CityGrid = () => {
     const {defaultBreweries, defaultCity, hasBreweries} = useContext(BreweryContext);
@@ -23,10 +21,10 @@ const CityGrid = () => {
     }, []);
 
     return (
-        <CityGridContainer >
+        <CityGridContainer elevation={2} >
             <h2>
                {' Explore Today\'s Featured City: '}
-                <Link component={RouterLink} to={defaultCity}>{capitalize(defaultCity)}</Link>
+                <Link component={RouterLink} to={defaultCity}>{capitalizeAll(defaultCity)}</Link>
             </h2>
             <CustomGrid container spacing={1}>
                 {
@@ -34,7 +32,7 @@ const CityGrid = () => {
                         if (brewery !== null) {
                             return (
                                 <Grid item xs={4}>
-                                    <Link component={RouterLink} to={`${defaultCity}/${brewery.id}`}>{brewery.name}</Link>
+                                    <Link component={RouterLink} to={`${encodePath(defaultCity)}/${brewery.id}`}>{brewery.name}</Link>
                                 </Grid>
                             )
                         }

@@ -19,7 +19,6 @@ const ButtonBreweriesNearMe: FC<ButtonBreweriesNearMeProps> = ({variant}) => {
 
     return (
         <Button onClick={breweriesNearMe} variant={variant} color="inherit" sx={{margin: '30px auto'}}>Find Breweries Near Me</Button>
-
     )
 };
 

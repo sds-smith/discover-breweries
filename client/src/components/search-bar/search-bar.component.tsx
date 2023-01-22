@@ -11,9 +11,7 @@ import useGetBreweries from '../../utils/hooks/use-get-breweries';
 import { defaultSearchCityState } from '../../utils/types.utils';
 import {STATES} from '../../assets/data/states.js';
 
-const transform = (stateName: string) => {
-    return stateName.toLowerCase().replace(' ', '_');
-};
+import { transformStateName } from '../../utils';
 
 const SearchBar = ({styles={backgroundColor: 'unset', color: 'white', margin: 'unset'}}) => {
     const [searchParams, setSearchParams] = useState(defaultSearchCityState);
@@ -37,9 +35,9 @@ const SearchBar = ({styles={backgroundColor: 'unset', color: 'white', margin: 'u
     const searchCity = async (e: FormEvent<HTMLInputElement>) => {
       e.preventDefault();
       const city = searchParams.city.replace(' ', '-').toLowerCase();
-      navigate(`/${city}`);
       await getSearchCityBreweries(searchParams);
       setSearchParams(defaultSearchCityState);
+      navigate(`/${city}`);
     };
 
     const renderMenuItems = () => {
@@ -48,7 +46,7 @@ const SearchBar = ({styles={backgroundColor: 'unset', color: 'white', margin: 'u
            <em>State</em>
           </MenuItem>,
           ...STATES.map(state => (
-            <MenuItem key={state.abbreviation} value={transform(state.name)}>{state.abbreviation}</MenuItem>
+            <MenuItem key={state.abbreviation} value={transformStateName(state.name)}>{state.abbreviation}</MenuItem>
           ))
         ];
     };

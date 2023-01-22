@@ -32,7 +32,7 @@ async function loadCitiesData() {
 
 async function loadBreweriesData() { 
     const checkBrewery = await findBrewery({
-        city: capitalize(DEFAULT_CITY)
+        city: transform(DEFAULT_CITY)
     });
     if (checkBrewery) {
         console.log('Brewery data already loaded!');

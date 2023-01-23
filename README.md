@@ -2,7 +2,7 @@
 
 A brewery locator app built for the [RSM HCD Coding Challenge](<https://rsm-hcd-coding-challenge.s3.amazonaws.com/requirements/RSM+HCD+Coding+Challenge+Instructions+(1).pdf>) and powered by the [OpenBreweryDB API](https://www.openbrewerydb.org/documentation).
 
-[Jump to What's New](#what's-new)
+[Jump to What's New](#whats-new)
 
 ## Primary Tech Stack
 
@@ -72,3 +72,5 @@ The app is hosted on an AWS Cloudfront distribution from two load-balanced AWS E
 - Styling converted to CSS-in-JS/emotion
 - Home page built out with Daily Featured City, Explore any City, and Explore Nearby Breweries
 - Server logic added to select rotating daily city on 24 hour interval
+
+[def]: #whats-new

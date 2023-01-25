@@ -24,7 +24,7 @@ const CityGrid = () => {
         <CityGridContainer elevation={2} >
             <h2>
                {' Explore Today\'s Featured City: '}
-                <Link component={RouterLink} to={defaultCity}>{capitalizeAll(defaultCity)}</Link>
+                <Link component={RouterLink} to={encodePath(defaultCity)}>{capitalizeAll(defaultCity)}</Link>
             </h2>
             <CustomGrid container spacing={1}>
                 {
@@ -39,7 +39,7 @@ const CityGrid = () => {
                     })
                 }
                 <Grid item xs={4}>
-                    <Link component={RouterLink} to={defaultCity}>more . . .</Link>
+                    <Link component={RouterLink} to={encodePath(defaultCity)}>more . . .</Link>
                 </Grid>
 
             </CustomGrid>

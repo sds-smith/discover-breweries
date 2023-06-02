@@ -9,7 +9,6 @@ async function getGeoCode(postal_code) {
         const geoResponse = await axios.get(
             `${GOOGLE_MAPS_API_BASE_URL}/geocode/json?components=postal_code:${postal_code}&key=${process.env.GOOGLE_MAPS_API_KEY}`
         );
-
         const {lat, lng} = await geoResponse.data.results[0].geometry.location;
         return {
             ok: true,

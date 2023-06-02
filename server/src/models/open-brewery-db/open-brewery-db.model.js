@@ -95,7 +95,7 @@ async function transformBreweryData(breweryDocs) {
             let longToSet
             let latToSet
             if (!longitude || !latitude) {
-                const {data} = await getGeoCode(postal_code)
+                const {data} = await getGeoCode(postal_code?.split('-')[0])
                 longToSet = data.lng
                 latToSet = data.lat
             } else {

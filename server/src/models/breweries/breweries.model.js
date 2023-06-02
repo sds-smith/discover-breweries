@@ -122,7 +122,6 @@ async function getDefaultBreweries() {
 };
 
 async function clearDefaultBreweries() {
-    console.log({YESTERDAYS_CITY})
     if (YESTERDAYS_CITY) {
         await breweries.deleteMany({
             city: transform(YESTERDAYS_CITY)

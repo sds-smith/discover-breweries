@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { BreweryArray } from "./types.utils";
+import { BreweryArray, BreweryType } from "./types.utils";
 
 
 export type BreweryContextProps = {
@@ -13,6 +13,8 @@ export type BreweryContextProps = {
     setLoadText(loadText: string): void;    
     defaultCity: string;
     setDefaultCity(defaultCity: string): void;
+    selectedBrewery: BreweryType;
+    setSelectedBrewery(selectedBrewery: BreweryType): void;
     hasBreweries(array: BreweryArray): boolean
 }
 

@@ -1,6 +1,6 @@
 import { useState, createContext, FC } from 'react';
 import {BreweryContextProps, ProviderProps} from '../utils/context.utils';
-import { BreweryArray } from '../utils/types.utils';
+import { BreweryArray, BreweryType, defaultBreweryState } from '../utils/types.utils';
 
 export const BreweryContext = createContext<BreweryContextProps>({
     defaultBreweries: [null],
@@ -13,6 +13,8 @@ export const BreweryContext = createContext<BreweryContextProps>({
     setLoadText: ()=>{},    
     defaultCity: '',
     setDefaultCity: ()=>{},
+    selectedBrewery: defaultBreweryState,
+    setSelectedBrewery: ()=>{},
     hasBreweries: ()=>false
 });
 
@@ -24,6 +26,7 @@ export const BreweryProvider: FC<ProviderProps> = ({children}) => {
     const [searchCityBreweries, setSearchCityBreweries] = useState<BreweryArray>([null]);
     const [loadText, setLoadText] = useState<string>(DEFAULT_LOAD_TEXT);
     const [defaultCity, setDefaultCity] = useState<string>('')
+    const [selectedBrewery, setSelectedBrewery] = useState<BreweryType>(defaultBreweryState)
 
     const hasBreweries = (array: BreweryArray): boolean => {
         return array[0] !== null
@@ -40,7 +43,9 @@ export const BreweryProvider: FC<ProviderProps> = ({children}) => {
         setLoadText,
         defaultCity,
         setDefaultCity,
-        hasBreweries
+        hasBreweries,
+        selectedBrewery,
+        setSelectedBrewery
     }
 
     return <BreweryContext.Provider value={value}>{children}</BreweryContext.Provider>

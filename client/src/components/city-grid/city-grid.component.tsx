@@ -7,13 +7,17 @@ import { BreweryContext } from '../../context/brewery.context';
 import useGetBreweries from '../../utils/hooks/use-get-breweries';
 
 import { capitalizeAll, encodePath } from '../../utils';
+import { BreweryType } from '../../utils/types.utils';
 
 import { CityGridContainer, CustomGrid } from './city-grid.styles';
 
 const CityGrid = () => {
-    const {defaultBreweries, defaultCity, hasBreweries} = useContext(BreweryContext);
+    const {defaultBreweries, defaultCity, hasBreweries, setSelectedBrewery} = useContext(BreweryContext);
     const {getDefaultBreweries} = useGetBreweries();
 
+    const selectBrewery = (brewery: BreweryType) => {
+        setSelectedBrewery(brewery)
+    }
     useEffect(() => {
         if (!hasBreweries(defaultBreweries)) {
             getDefaultBreweries();
@@ -32,7 +36,15 @@ const CityGrid = () => {
                         if (brewery !== null) {
                             return (
                                 <Grid item xs={4}>
-                                    <Link component={RouterLink} to={`${encodePath(defaultCity)}/${brewery.id}`}>{brewery.name}</Link>
+                                    <div >
+                                        <Link 
+                                            component={RouterLink} 
+                                            to={`${encodePath(defaultCity)}/${brewery.id}`}
+                                            onClick={() => selectBrewery(brewery)}
+                                        >
+                                            {brewery.name}
+                                        </Link>
+                                    </div>
                                 </Grid>
                             )
                         }

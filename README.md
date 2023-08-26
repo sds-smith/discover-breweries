@@ -24,7 +24,7 @@ A brewery locator app built for the [RSM HCD Coding Challenge](<https://rsm-hcd-
 
 ## Demo the App
 
-The app is hosted live at [https://dgx0klc0yfelo.cloudfront.net](https://dgx0klc0yfelo.cloudfront.net). Feel free to try it out.
+The app is hosted live at [https://d1a7pd74l4mf0t.cloudfront.net](https://d1a7pd74l4mf0t.cloudfront.net). Feel free to try it out.
 
 ## UI/UX Flow
 

@@ -48,6 +48,6 @@ const brewerySchema = new mongoose.Schema({
 
 module.exports = {
     breweries: mongoose.model('Brewery', brewerySchema),
+    featured: mongoose.model('Featured', brewerySchema),
     cities: mongoose.model('City', citySchema)
-
 }

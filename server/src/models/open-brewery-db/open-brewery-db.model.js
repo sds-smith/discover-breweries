@@ -6,7 +6,9 @@ const {getGeoCode} = require('../geo-code/geo-code.model')
 const OPEN_BREWERY_DB_BASE_URL = 'https://api.openbrewerydb.org/breweries';
 
 async function getAllBreweries() {
-    return await getBreweries();
+    const breweryDocs = await getBreweries();
+    const {breweriesToReturn} = await transformBreweryData(breweryDocs);
+    return breweriesToReturn;
 }
 
 async function getBreweries(city=undefined, state=undefined, page=1, breweryDocs=[]) {

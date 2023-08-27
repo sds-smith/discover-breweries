@@ -1,13 +1,9 @@
 require('dotenv').config();
 
-const {cities, breweries} = require('./breweries.mongo');
+const {cities, breweries, featured} = require('./breweries.mongo');
 const { getAllBreweries, getBreweriesByCity } = require('../open-brewery-db/open-brewery-db.model')
 
 let DEFAULT_CITY='asheville';
-let YESTERDAYS_CITY
-let CITIES_COUNT
-const INTERVAL = 1000 * 60 * 60 * 24
-
 
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -18,33 +14,44 @@ function capitalize(string) {
   };
 
 //Mongo Functions
-async function loadCitiesData() {
+async function loadCitiesData(breweryDocs) {
     const citiesCount = await cities.count();
     if (citiesCount) {
         CITIES_COUNT = citiesCount
         console.log('City data already loaded!');
     } else {
-        await populateCitiesData();
+        await populateCitiesData(breweryDocs);
         CITIES_COUNT = await cities.count();
     };
-    startClock()
 };
 
 async function loadBreweriesData() { 
-    const checkBrewery = await findBrewery({
-        city: transform(DEFAULT_CITY)
-    });
+    const checkBrewery = await findBrewery({});
     if (checkBrewery) {
         console.log('Brewery data already loaded!');
     } else {
-        populateBreweriesData();
+        const {breweryDocs} = await populateBreweriesData();
+        await loadFeaturedData(breweryDocs);
+        await loadCitiesData(breweryDocs);
     };
 };
 
-async function populateCitiesData() {
+async function loadFeaturedData(breweryDocs) {
+    const checkFeatured = await findFeaturedBrewery({});
+    if (checkFeatured) {
+        console.log('Featured City data already loaded!')
+    } else {
+        const featuredBreweryDocs = breweryDocs.filter(doc => 
+            doc.city === transform(DEFAULT_CITY));
+        for (const featuredBreweryDoc of featuredBreweryDocs) {
+            await saveFeaturedBrewery(featuredBreweryDoc)
+        };
+    };
+};
+
+async function populateCitiesData(breweryDocs) {
     console.log('Downloading cities data...');
     try {
-        const breweryDocs = await getAllBreweries();
 
         let id = 0;
         for (const breweryDoc of breweryDocs) {
@@ -75,16 +82,15 @@ async function populateCitiesData() {
 async function populateBreweriesData() {
     console.log('Downloading breweries data...');
     try {
-        await clearDefaultBreweries();
-        const response = await getBreweriesByCity(DEFAULT_CITY);
-        const breweryDocs = response.breweriesToReturn
+        const breweryDocs = await getAllBreweries();
 
         for (const breweryDoc of breweryDocs) {
             await saveBrewery(breweryDoc)
         };
         return {
             ok: true,
-            status: 201
+            status: 201,
+            breweryDocs
         }
     } catch (err) {
         console.log(err.message)
@@ -96,37 +102,17 @@ async function populateBreweriesData() {
     }
 };
 
-function startClock() {
-    console.log('starting clock')
-    setInterval(async () => {
-        const defaultCityId = Math.floor(Math.random() * CITIES_COUNT).toString();
-        console.log({CITIES_COUNT,defaultCityId})
-        const city = await findCity({id: defaultCityId})
-        console.log({city})
-        YESTERDAYS_CITY = DEFAULT_CITY
-        DEFAULT_CITY = city.name.toLowerCase();
-        await loadBreweriesData();
-    }, INTERVAL)
-}
-
 async function getDefaultBreweries() {
-        const breweriesToReturn = await breweries
+        const breweriesToReturn = await featured
         .find({}, {
             '_id': 0,
             '__v': 0
-        })
+        });
+        const featuredCity = breweriesToReturn[0]?.city
         return {
-            DEFAULT_CITY,
+            DEFAULT_CITY : featuredCity,
             breweries: breweriesToReturn
         }
-};
-
-async function clearDefaultBreweries() {
-    if (YESTERDAYS_CITY) {
-        await breweries.deleteMany({
-            city: transform(YESTERDAYS_CITY)
-        });
-    }
 };
 
 async function findCity(filter) {
@@ -135,6 +121,10 @@ async function findCity(filter) {
 
 async function findBrewery(filter) {
     return await breweries.findOne(filter)
+};
+
+async function findFeaturedBrewery(filter) {
+    return await featured.findOne(filter)
 };
 
 async function saveCity(city) {
@@ -165,9 +155,18 @@ async function saveBrewery(brewery) {
     });
 };
 
+async function saveFeaturedBrewery(brewery) {
+    await featured.findOneAndUpdate({
+        id: brewery.id
+    },
+    brewery,
+    {
+        upsert: true
+    });
+};
+
 module.exports = {
     loadCitiesData,
     loadBreweriesData,
-    startClock,
     getDefaultBreweries,
-}
+};

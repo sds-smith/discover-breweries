@@ -91,8 +91,10 @@ async function getSearchCityBreweries(city, state) {
 
 async function transformBreweryData(breweryDocs) {
     try {
-        const breweriesToReturn = []
-        for (const breweryDoc of breweryDocs) {
+        const breweriesToReturn = [];
+        const filteredBreweryDocs = breweryDocs
+            .filter(doc => doc.country === 'United States')
+        for (const breweryDoc of filteredBreweryDocs) {
             const {id, name, brewery_type, street, city, state, postal_code, website_url, longitude, latitude} = breweryDoc;
             let longToSet
             let latToSet

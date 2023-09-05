@@ -55,14 +55,12 @@ async function populateCitiesData(breweryDocs) {
 
         let id = 0;
         for (const breweryDoc of breweryDocs) {
-            const {city, country} = breweryDoc;
-            if (country === "United States") {
-                const saved = await saveCity({
-                    name: city,
-                    id
-                });
-                if (saved) id ++
-            }
+            const {city} = breweryDoc;
+            await saveCity({
+                name: city,
+                id
+            });
+            id ++
         };
 
         return {
@@ -146,6 +144,7 @@ async function saveCity(city) {
 }
 
 async function saveBrewery(brewery) {
+    console.log(`saving ${brewery.name}`);
     await breweries.findOneAndUpdate({
         id: brewery.id
     },

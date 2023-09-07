@@ -2,6 +2,7 @@ import axios from 'axios';
 import { SearchCityType } from '../types.utils';
 
 const API_BASE_URL='v1';
+const AWS_API_URL = 'https://3vd325v5vc.execute-api.us-east-1.amazonaws.com/default'
 
 export async function httpGetSearchCityBreweries(city: SearchCityType) {
     let queryString = '';
@@ -20,7 +21,7 @@ export async function httpGetSearchCityBreweries(city: SearchCityType) {
 
 export async function httpgetDefaultBreweries() {
     try {
-        const response = await axios.get(`${API_BASE_URL}/breweries/default_city`)
+        const response = await axios.get(`${AWS_API_URL}/discover-breweries_getFeaturedBreweries`)
         return await response.data
     } catch (err) {
         return err

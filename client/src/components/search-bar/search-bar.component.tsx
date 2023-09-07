@@ -46,7 +46,7 @@ const SearchBar = ({styles={backgroundColor: 'unset', color: 'white', margin: 'u
            <em>State</em>
           </MenuItem>,
           ...STATES.map(state => (
-            <MenuItem key={state.abbreviation} value={transformStateName(state.name)}>{state.abbreviation}</MenuItem>
+            <MenuItem key={state.abbreviation} value={state.name}>{state.abbreviation}</MenuItem>
           ))
         ];
     };

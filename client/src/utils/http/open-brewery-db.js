@@ -1,4 +1,5 @@
 import axios from 'axios';
+import getGeoCode from './geo-code';
 
 const OPEN_BREWERY_DB_BASE_URL = 'https://api.openbrewerydb.org/breweries';
 

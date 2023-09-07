@@ -28,30 +28,6 @@ async function getBreweries(city=undefined, state=undefined, page=1, breweryDocs
     return breweryDocs;
 };
 
-async function getBreweriesNearMe(latLong) {
-    try {
-        const response = await axios.get(`${OPEN_BREWERY_DB_BASE_URL}?by_dist=${latLong}`);
-        const breweries = await response.data;
-        const {breweriesToReturn} = await transformBreweryData(breweries)
-        return {
-            ok: true,
-            status: 200,
-            data: {
-                message: "Breweries Retrieved",
-                breweries: breweriesToReturn
-            }
-        }
-    } catch(err) {
-        return {
-            ok: false,
-            status: 500,
-            data: {
-                message: err.message
-            }
-        }
-    }
-};
-
 // ! Helper functions
 async function getBreweriesByCity(city, state) {
     try {
@@ -134,7 +110,6 @@ async function transformBreweryData(breweryDocs) {
 module.exports = {
     getAllBreweries,
     getBreweries,
-    getBreweriesNearMe,
     getBreweriesByCity,
     getSearchCityBreweries,
     transformBreweryData

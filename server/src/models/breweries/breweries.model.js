@@ -113,6 +113,20 @@ async function getDefaultBreweries() {
         }
 };
 
+async function getSearchCityBreweries(city, state) {
+    const filter = {city};
+    if (state !== undefined) filter.state = state;
+    const breweriesToReturn = await breweries
+    .find(filter, {
+        '_id': 0,
+        '__v': 0
+    });
+    return {
+        breweries: breweriesToReturn,
+        message: `Breweries Retrieved`
+    }
+};
+
 async function findCity(filter) {
     return await cities.findOne(filter)
 };
@@ -168,4 +182,5 @@ module.exports = {
     loadCitiesData,
     loadBreweriesData,
     getDefaultBreweries,
+    getSearchCityBreweries
 };

@@ -18,15 +18,6 @@ export async function httpGetSearchCityBreweries(city: SearchCityType) {
     }
 };
 
-export async function httpGetMyLocalBreweries(clientLatLong: string) {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/breweries/by-dist?latLong=${clientLatLong}`)
-        return await response.data
-    } catch (err) {
-        return err
-    }
-};
-
 export async function httpgetDefaultBreweries() {
     try {
         const response = await axios.get(`${API_BASE_URL}/breweries/default_city`)

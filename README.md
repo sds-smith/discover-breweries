@@ -2,9 +2,11 @@
 
 A brewery locator app built for the [RSM HCD Coding Challenge](<https://rsm-hcd-coding-challenge.s3.amazonaws.com/requirements/RSM+HCD+Coding+Challenge+Instructions+(1).pdf>) and powered by the [OpenBreweryDB API](https://www.openbrewerydb.org/documentation).
 
-This branch archives the original MERN app which was built for the challenge in December 2022, with two key enhancements that were added later (detailed in the 'What's New' section). Below is the original documentation.
+This branch archives the original MERN app which was built for the challenge in December 2022, with two key enhancements that were added later (detailed in the 'What's New' section).
 
-For the current (serverless) version, please see branch [v3.0_lambda](https://github.com/sds-smith/discover-breweries/tree/v3.0_lambda)
+For the current (serverless) version, please see branch [v3.0_lambda](https://github.com/sds-smith/discover-breweries/tree/v3.0_lambda).
+
+Below is the original documentation.
 
 ## Primary Tech Stack
 

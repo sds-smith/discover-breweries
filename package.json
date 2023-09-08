@@ -1,19 +1,17 @@
 {
   "name": "discover-breweries",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Serverless version with AWS API Gateway, Cloudwatch Events and Lambda Functions",
   "main": "index.js",
   "scripts": {
-    "install-server": "npm install --prefix server",
     "install-client": "npm install --prefix client",
-    "install": "npm run install-server && npm run install-client",
-    "server": "npm start --prefix server",
+    "install": "npm run install-client",
     "client": "npm start --prefix client",
-    "start": "npm run server & npm run client",
-    "deploy": "npm run build --prefix client && npm start --prefix server",
+    "start": "npm run client",
+    "deploy": "npm run build --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Shawn Smith",
   "license": "ISC"
 }

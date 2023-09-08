@@ -1,75 +1,47 @@
-# Discover Breweries 2.0
+# Discover Breweries 3.0
 
-A brewery locator app built for the [RSM HCD Coding Challenge](<https://rsm-hcd-coding-challenge.s3.amazonaws.com/requirements/RSM+HCD+Coding+Challenge+Instructions+(1).pdf>) and powered by the [OpenBreweryDB API](https://www.openbrewerydb.org/documentation).
+A brewery locator app originally built for the [RSM HCD Coding Challenge](<https://rsm-hcd-coding-challenge.s3.amazonaws.com/requirements/RSM+HCD+Coding+Challenge+Instructions+(1).pdf>) and powered by the [OpenBreweryDB API](https://www.openbrewerydb.org/documentation).
 
-## [Jump to What's New](#whats-new)
+Since its original development as a full-stack MERN app in December, 2022, this app has seen multiple iterations, as it has become a personal playground where I can try out new things as I continue to explore and learn new technologies and skills.
+
+For this iteration, I removed the node/express server and moved the backend logic into AWS Lambda function for a more lightweight serverless deployment.
+
+The frontend React app is served from a static build in an AWS S3 bucket.
+
+- API calls to OpenBreweryDB are now made directly from the frontend
+
+Three Lambda functions power the backend, connecting to MongoDB Atlas and performing the full range of CRUD operations:
+
+- `discover-breweries_rotateCities`
+  - Triggered by a custom Cloudwatch Event which fires every 24 hours at midnight
+  - Selects a new random city to feature and updates the list of featured breweries accordingly
+- `discover-breweries_getFeaturedBreweries`
+  - Triggered by an API Gateway when a request is sent to the custom endpoint from the app
+  - Queries the featured city's breweries from MongoDB and returns the list to the app
+- `discover-breweries_getSearchCityBreweries`
+  - Here, API Gateway receives a query string in the request from the app and passes that payload through to the Lambda function
+  - The Lambda function processes the payload and includes it in the Mongo query, returning the response to the frontend
 
 ## Primary Tech Stack
 
 - MongoDB 6.0
-- Express.js 4.18.2
 - React.js 18.2.8
-- Node.js 18.12.1
+- AWS Cloudfront
+- AWS S3 Buckets
+- AWS Lambda
+- AWS API Gateway
+- AWS Cloudwatch Events
 
 ### Additional Technologies used:
 
 - React Router for client-side routing
 - TypeScript for all client-side code
-- Axios for http requests (client to server and server to external api)
+- Axios for http requests
 - Google-map-react for Google Maps integration
 - Material UI Component Library
 - CSS-in-JS (emotion) for styling
 - Mongoose for MongoDB integration
-- Docker for containerizing the app for shipping
 
 ## Demo the App
 
 The app is hosted live at [https://d1a7pd74l4mf0t.cloudfront.net](https://d1a7pd74l4mf0t.cloudfront.net). Feel free to try it out.
-
-## UI/UX Flow
-
-When the user navigates to the home page, they are presented with a list of all breweries in a default city (Asheville, NC), provided by [OpenBreweryDB](https://www.openbrewerydb.org/documentation). The list displays the following information for each brewery:
-
-- Name
-- Brewery Type
-- Address (Street, City, State, Zip)
-- Website URL (Clickable)
-
-Within the list, the user is able to:
-
-- Click on any brewery name to be routed to an individual brewery page displaying location information, including name, address, and a map indicating the brewery's location using latitude and longitude.
-- Click on any brewery url to open the brewery's website in a new tab.
-
-From any route in the App, the user will see a persistent header containing two navigation buttons:
-
-- Home - returns to the home page
-- Find Breweries Near Me - leverages the browser's built-in Geolocation API (with the user's explicit permission) to display a list of breweries closest to the client's location, returned from OpenBreweryDB.
-
-The header also contains a search bar where the user is able to search breweries by city (required) with optional State parameter.
-
-Additional navigation is provided through a breadcrumb trail directly below the header.
-
-## Server-side functionality
-
-The versionable REST API follows the MVC design pattern and is accessed through the `/v1` path. It consists of one router (BreweriesRouter) at `v1/breweries`.
-
-BreweriesRouter contains three endpoints:
-
-- `'/default_city'` returns the default list of breweries for display on the home page. This list is generated from OpenBreweryDB and is persisted in a MongoDB Cluster.
-- `'/by-dist?[CLIENT_GEOLOCATION_DATA]'` returns a list of breweries closest to the user's current location. A request is sent to the OpenBreweryDB API.
-- `'/search?[CITY]'` returns a list of breweries in the city requested by the user in the search bar.
-
-## Deployment and Hosting
-
-The app is hosted on an AWS Cloudfront distribution from two load-balanced AWS EC2 instances, where it is running in a Docker container.
-
-## What's New
-
-### Version 2.0
-
-- App converted to Material UI components
-- Styling converted to CSS-in-JS/emotion
-- Home page built out with Daily Featured City, Explore any City, and Explore Nearby Breweries
-- Server logic added to select rotating daily city on 24 hour interval
-
-[def]: #whats-new

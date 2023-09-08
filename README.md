@@ -5,7 +5,6 @@ A brewery locator app originally built for the [RSM HCD Coding Challenge](<https
 Since its original development as a full-stack MERN app in December, 2022, this app has seen multiple iterations, as it has become a personal playground where I can try out new things as I continue to explore and learn new technologies and skills.
 
 **The main branch is up-to-date with the latest version, branch v3.0_lambda.**
-
 To view the original MERN stack app, please see branch [v2.0_mern](https://github.com/sds-smith/discover-breweries/tree/v2.0_mern).
 
 For this iteration, I removed the node/express server and moved the backend logic into AWS Lambda function for a more lightweight serverless deployment.

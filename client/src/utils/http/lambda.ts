@@ -12,7 +12,7 @@ export async function httpGetSearchCityBreweries(city: SearchCityType) {
         queryString += `state=${city.state}`
     };
     try {
-        const response = await axios.get(`${API_BASE_URL}/breweries/search?${queryString}`)
+        const response = await axios.post(`${AWS_API_URL}/discover-breweries_getSearchCityBreweries?${queryString}`)
         return await response.data
     } catch (err) {
         return err

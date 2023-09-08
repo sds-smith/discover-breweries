@@ -10,6 +10,8 @@ import useGetBreweries from "../../utils/hooks/use-get-breweries";
 import { BreweryContext } from "../../context/brewery.context";
 import { ClientContext } from "../../context/client.context";
 
+import { transformLabel } from "../../utils";
+
 const SearchResults = () => {
     const params = useParams()
     const {hasBreweries, searchCityBreweries} = useContext(BreweryContext);
@@ -20,7 +22,7 @@ const SearchResults = () => {
     useEffect(() => {
         if (!hasBreweries(searchCityBreweries)) {
             const city = params.city as string
-            getSearchCityBreweries({city});
+            getSearchCityBreweries({city: transformLabel(city)});
         };
     },[])
 

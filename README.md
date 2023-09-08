@@ -8,7 +8,7 @@ For this iteration, I removed the node/express server and moved the backend logi
 
 The frontend React app is served from a static build in an AWS S3 bucket.
 
-- API calls to OpenBreweryDB are now made directly from the frontend
+- API calls to OpenBreweryDB are now made directly from the frontend on click of 'FIND BREWERIES NEAR ME'
 
 Three Lambda functions power the backend, connecting to MongoDB Atlas and performing the full range of CRUD operations:
 

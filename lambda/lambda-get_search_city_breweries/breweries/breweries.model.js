@@ -3,7 +3,7 @@ const {breweries} = require('./breweries.mongo');
 
 async function getSearchCityBreweries(city, state) {
     const filter = {city};
-    if (state !== undefined) filter.state = state;
+    if (state) filter.state = state;
     const breweriesToReturn = await breweries
     .find(filter, {
         '_id': 0,

@@ -35,7 +35,7 @@ const CityGrid = () => {
                     defaultBreweries.slice(0,9).map(brewery => {
                         if (brewery !== null) {
                             return (
-                                <Grid item xs={4}>
+                                <Grid item xs={4} key={brewery.id}>
                                     <div >
                                         <Link 
                                             component={RouterLink} 

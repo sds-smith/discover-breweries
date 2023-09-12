@@ -44,4 +44,4 @@ Three Lambda functions power the backend, connecting to MongoDB Atlas and perfor
 
 ## Demo the App
 
-The app is hosted live at [https://d1a7pd74l4mf0t.cloudfront.net](https://d1a7pd74l4mf0t.cloudfront.net). Feel free to try it out.
+The app is hosted live at [https://d3a12a5s7dak7b.cloudfront.net/](https://d3a12a5s7dak7b.cloudfront.net/). Feel free to try it out.

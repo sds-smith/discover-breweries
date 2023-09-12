@@ -31,7 +31,7 @@ const SearchResults = () => {
             { locationErrorMsg ? 
                 <Typography>{`${locationErrorMsg}. Please return to home page.`}</Typography>
                 : 
-                <CityTable breweriesToRender={searchCityBreweries} />
+                <CityTable breweriesToRender={searchCityBreweries} where='in' />
             }
         </>
     )

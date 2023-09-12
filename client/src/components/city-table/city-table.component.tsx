@@ -19,10 +19,11 @@ import { BreweryContext } from '../../context/brewery.context';
 import { BreweryArray } from '../../utils/types.utils';
 
 type CityTableProps = {
-    breweriesToRender: BreweryArray
+    breweriesToRender: BreweryArray,
+    where: string
 };
 
-const CityTable: FC<CityTableProps> = ({breweriesToRender}) => {
+const CityTable: FC<CityTableProps> = ({breweriesToRender, where}) => {
     const [city, setCity] = useState('');
     const [page, setPage] = useState(1);
     
@@ -53,7 +54,7 @@ const CityTable: FC<CityTableProps> = ({breweriesToRender}) => {
         <>
             { hasBreweries(breweriesToRender) ? (
                     <TableContainer >     
-                        <Typography variant='h4' component='h2' sx={{marginTop: '40px', textAlign: 'center'}}>{`Breweries near ${city}`}</Typography>
+                        <Typography variant='h4' component='h2' sx={{marginTop: '40px', textAlign: 'center'}}>{`Breweries ${where} ${city}`}</Typography>
                         <Paper elevation={12} sx={{width: '80vw', margin: '20px auto'}} >
                             <Table sx={{tableLayout: 'fixed'}} >
                                 <TableHead >

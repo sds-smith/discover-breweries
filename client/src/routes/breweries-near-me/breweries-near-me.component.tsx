@@ -26,7 +26,7 @@ const BreweriesNearMe = () => {
             { locationErrorMsg ? 
                 <Typography>{`${locationErrorMsg}. Please return to home page.`}</Typography>
                 : 
-                <CityTable breweriesToRender={breweriesNearMe} />
+                <CityTable breweriesToRender={breweriesNearMe} where='near' />
             }
         </>
     )

@@ -15,7 +15,7 @@ const DefaultCity = () => {
     }, []);
 
     return (
-        <CityTable breweriesToRender={defaultBreweries}/>
+        <CityTable breweriesToRender={defaultBreweries} where='in'/>
     );
 };
 

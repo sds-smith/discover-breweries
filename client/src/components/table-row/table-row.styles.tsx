@@ -1,5 +1,6 @@
 import { ForwardRefExoticComponent } from "react";
-import { LinkProps } from "react-router-dom";import styled from "@emotion/styled";
+import { LinkProps } from "react-router-dom";
+import styled from "@emotion/styled";
 import Link from '@mui/material/Link';
 
 type TableLinkProps = {

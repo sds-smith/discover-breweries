@@ -1,5 +1,5 @@
 import { useContext, ReactNode} from 'react'
-import { useLocation, useParams, Link } from 'react-router-dom'
+import { useLocation, useParams, Link as RouterLink } from 'react-router-dom'
 import Breadcrumbs from "@mui/material/Breadcrumbs"
 import Typography from "@mui/material/Typography"
 import { BreweryContext } from '../../context/brewery.context'
@@ -18,7 +18,7 @@ const BreadcrumbTrail = () => {
   const renderLinks = () => {
     let accumulator = '';
     const links: linksArrayType = [
-        <BreadcrumbLink key='home' /*underline="hover"*/ color="inherit" to='/'>
+        <BreadcrumbLink component={RouterLink} key='home' color="inherit" to='/'>
           Home
         </BreadcrumbLink>
     ];
@@ -33,7 +33,7 @@ const BreadcrumbTrail = () => {
         );
       } else {
         links.push(
-          <BreadcrumbLink key={pathname} /*underline="hover"*/ color="inherit" to={`${accumulator}`}>
+          <BreadcrumbLink component={RouterLink} key={pathname} color="inherit" to={`${accumulator}`}>
             {transformLabel(pathname)}
           </BreadcrumbLink>
         );

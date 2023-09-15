@@ -35,9 +35,9 @@ const SearchBar = ({styles={backgroundColor: 'unset', color: 'white', margin: 'u
     const searchCity = async (e: FormEvent<HTMLInputElement>) => {
       e.preventDefault();
       const city = searchParams.city.replace(' ', '-').toLowerCase();
+      navigate(`/${city}`);
       await getSearchCityBreweries(searchParams);
       setSearchParams(defaultSearchCityState);
-      navigate(`/${city}`);
     };
 
     const renderMenuItems = () => {

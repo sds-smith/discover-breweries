@@ -3,7 +3,7 @@ import { useLocation, useParams, Link as RouterLink } from 'react-router-dom'
 import Breadcrumbs from "@mui/material/Breadcrumbs"
 import Typography from "@mui/material/Typography"
 import { BreweryContext } from '../../context/brewery.context'
-import { transformLabel } from '../../utils'
+import { transformLabel, encodePath } from '../../utils'
 import { BreadcrumbLink } from './breadcrumbs.styles'
 
 type linksArrayType = ReactNode[];
@@ -13,7 +13,7 @@ const BreadcrumbTrail = () => {
   const pathnames = location.pathname.split('/').filter((x) => x);
   const params = useParams();
 
-  const {selectedBrewery} = useContext(BreweryContext);
+  const {selectedBrewery, defaultCity} = useContext(BreweryContext);
 
   const renderLinks = () => {
     let accumulator = '';
@@ -23,7 +23,10 @@ const BreadcrumbTrail = () => {
         </BreadcrumbLink>
     ];
     pathnames.forEach((pathname) => {
-      accumulator = accumulator.concat(`/${pathname}`);
+
+      accumulator = transformLabel(pathname) === defaultCity
+                    ? accumulator.concat(`/${encodePath(defaultCity)}`) 
+                    : accumulator.concat(`/${pathname}`);
       if (pathnames.indexOf(pathname) === pathnames.length - 1) {
         const lastBreadcrumb = params.id !== undefined ? selectedBrewery.name : transformLabel(pathname)
         links.push(

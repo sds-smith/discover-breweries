@@ -8,7 +8,8 @@
     "install": "npm run install-client",
     "client": "npm start --prefix client",
     "start": "npm run client",
-    "deploy": "npm run build --prefix client",
+    "aws-s3-sync": "aws s3 sync client/build s3://discover-breweries-static-frontend",
+    "deploy": "npm run build --prefix client && npm run aws-s3-sync",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

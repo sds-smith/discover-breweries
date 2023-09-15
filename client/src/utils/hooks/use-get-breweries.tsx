@@ -16,11 +16,12 @@ const useGetBreweries = () => {
     const [breweriesError, setBreweriesError] = useState('');
 
     const {clientLatLong} = useContext(ClientContext);
-    const { setDefaultCity, defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
+    const { setLoading, setDefaultCity, defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
     
     const {handleTrackLocation} = useTrackLocation();
 
     const getDefaultBreweries = async () => {
+      setLoading(true)
       try {
           const {breweries, DEFAULT_CITY} = await httpgetDefaultBreweries();
           setDefaultBreweries(breweries)
@@ -34,9 +35,11 @@ const useGetBreweries = () => {
               console.log(`Error getting breweries ${err}`)
             }
       }
+      setLoading(false)
     };
 
     const getSearchCityBreweries = async (city: SearchCityType) => {
+      setLoading(true)
       setSearchCityBreweries([null])
       try {
         const response = await httpGetSearchCityBreweries(city)
@@ -57,7 +60,7 @@ const useGetBreweries = () => {
           setBreweriesError(`Error getting breweries ${err}`)
         }
       }
-      navigate(`/${city.city.replace(' ', '-').toLowerCase()}`)
+      setLoading(false)
     }
 
     const getMyLocalBreweries = async () => {

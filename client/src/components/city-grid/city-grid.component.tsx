@@ -4,7 +4,6 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 
 import { BreweryContext } from '../../context/brewery.context';
-import useGetBreweries from '../../utils/hooks/use-get-breweries';
 
 import { capitalizeAll, encodePath } from '../../utils';
 import { BreweryType } from '../../utils/types.utils';
@@ -12,17 +11,11 @@ import { BreweryType } from '../../utils/types.utils';
 import { CityGridContainer, CustomGrid } from './city-grid.styles';
 
 const CityGrid = () => {
-    const {defaultBreweries, defaultCity, hasBreweries, setSelectedBrewery} = useContext(BreweryContext);
-    const {getDefaultBreweries} = useGetBreweries();
+    const {defaultBreweries, defaultCity, setSelectedBrewery} = useContext(BreweryContext);
 
     const selectBrewery = (brewery: BreweryType) => {
         setSelectedBrewery(brewery)
     }
-    useEffect(() => {
-        if (!hasBreweries(defaultBreweries)) {
-            getDefaultBreweries();
-        };
-    }, []);
 
     return (
         <CityGridContainer elevation={2} >
@@ -50,9 +43,13 @@ const CityGrid = () => {
                         }
                     })
                 }
-                <Grid item xs={4}>
-                    <Link component={RouterLink} to={encodePath(defaultCity)}>more . . .</Link>
-                </Grid>
+                {
+                    defaultBreweries.length > 9 &&
+                    <Grid item xs={4}>
+                        <Link component={RouterLink} to={encodePath(defaultCity)}>more . . .</Link>
+                    </Grid>
+
+                }
 
             </CustomGrid>
         </CityGridContainer>

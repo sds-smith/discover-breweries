@@ -37,8 +37,8 @@ const Home = () => {
             </>
             :
             <>
-              <Skeleton variant="rectangular" animation='wave' width={'80%'} height={30}  sx={{margin: '50px auto'}}/>
-              <Skeleton variant="rectangular" animation='wave' width={'80%'} height={30}  sx={{margin: '50px auto'}}/></>
+              <Skeleton variant="rectangular" animation='wave' width={'80%'} height={'18vh'}  sx={{margin: '50px auto'}}/>
+              <Skeleton variant="rectangular" animation='wave' width={'80%'} height={'24.2vh'}  sx={{margin: '50px auto'}}/></>
           }
 
         </div>

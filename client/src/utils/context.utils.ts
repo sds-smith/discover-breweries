@@ -15,7 +15,9 @@ export type BreweryContextProps = {
     setDefaultCity(defaultCity: string): void;
     selectedBrewery: BreweryType;
     setSelectedBrewery(selectedBrewery: BreweryType): void;
-    hasBreweries(array: BreweryArray): boolean
+    hasBreweries(array: BreweryArray): boolean;
+    loading: Boolean;
+    setLoading(loading: Boolean): void;
 }
 
 export type ClientContextProps = {

@@ -14,13 +14,13 @@ import { transformLabel } from "../../utils";
 
 const SearchResults = () => {
     const params = useParams()
-    const {hasBreweries, searchCityBreweries} = useContext(BreweryContext);
+    const {loading, hasBreweries, searchCityBreweries} = useContext(BreweryContext);
     const  {locationErrorMsg} = useContext(ClientContext);
 
     const {getSearchCityBreweries} = useGetBreweries();
 
     useEffect(() => {
-        if (!hasBreweries(searchCityBreweries)) {
+        if (!hasBreweries(searchCityBreweries) && !loading) {
             const city = params.city as string
             getSearchCityBreweries({city: transformLabel(city)});
         };

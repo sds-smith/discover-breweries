@@ -43,9 +43,13 @@ const CityGrid = () => {
                         }
                     })
                 }
-                <Grid item xs={4}>
-                    <Link component={RouterLink} to={encodePath(defaultCity)}>more . . .</Link>
-                </Grid>
+                {
+                    defaultBreweries.length > 9 &&
+                    <Grid item xs={4}>
+                        <Link component={RouterLink} to={encodePath(defaultCity)}>more . . .</Link>
+                    </Grid>
+
+                }
 
             </CustomGrid>
         </CityGridContainer>

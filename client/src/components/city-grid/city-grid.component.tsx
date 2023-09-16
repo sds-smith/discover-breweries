@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import { BreweryContext } from '../../context/brewery.context';
 import { capitalizeAll, encodePath } from '../../utils';
@@ -15,7 +16,7 @@ const CityGrid = () => {
     }
 
     return (
-        <CityGridContainer elevation={2} >
+        <CityGridContainer component={Paper} elevation={2} >
             <h2>
                {' Explore Today\'s Featured City: '}
                 <Link component={RouterLink} to={encodePath(defaultCity)}>{capitalizeAll(defaultCity)}</Link>
@@ -25,7 +26,7 @@ const CityGrid = () => {
                     defaultBreweries.slice(0,9).map(brewery => {
                         if (brewery !== null) {
                             return (
-                                <Grid item xs={4} key={brewery.id}>
+                                <Grid item xs={6} lg={4} key={brewery.id}>
                                     <div >
                                         <Link 
                                             component={RouterLink} 

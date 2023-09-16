@@ -1,9 +1,16 @@
 import styled from "@emotion/styled";
-import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 import SearchBar from "../search-bar/search-bar.component";
+import { ElementType } from "react";
 
-export const ActionBoxContainer = styled(Paper)`
+type ActionBoxContainerProps = {
+    component: ElementType;
+    elevation: number
+}
+
+export const ActionBoxContainer = styled(Grid)<ActionBoxContainerProps>`
     width: 80%;
+    height: 18vh;
     margin: 50px auto;
     padding: 30px 10%;
     display: flex;

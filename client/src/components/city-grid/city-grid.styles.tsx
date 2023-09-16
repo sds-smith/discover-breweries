@@ -1,8 +1,14 @@
 import styled from "@emotion/styled";
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { ElementType } from "react";
 
-export const CityGridContainer = styled(Paper)`
+type CityGridContainerProps = {
+    component: ElementType;
+    elevation: number
+}
+
+export const CityGridContainer = styled(Grid)<CityGridContainerProps>`
     width: 80%;
     margin: 50px auto;
     padding: 50px;

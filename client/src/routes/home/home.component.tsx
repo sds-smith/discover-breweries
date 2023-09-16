@@ -1,4 +1,5 @@
 import { useEffect, useContext } from "react";
+import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import Banner from "../../components/banner/banner.component";
 import CityGrid from "../../components/city-grid/city-grid.component";
@@ -18,7 +19,7 @@ const Home = () => {
   }, []);
 
     return (
-        <>
+        <Grid container>
           <Banner />
           {
             !loading ?
@@ -31,7 +32,7 @@ const Home = () => {
               <Skeleton variant="rectangular" animation='wave' width={'80%'} height={'18vh'}  sx={{margin: '50px auto'}}/>
               <Skeleton variant="rectangular" animation='wave' width={'80%'} height={'24.2vh'}  sx={{margin: '50px auto'}}/></>
           }
-        </>
+        </Grid>
     )
 }
 

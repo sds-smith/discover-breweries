@@ -1,4 +1,3 @@
-
 import {BannerContainer} from './banner.styles';
 
 const Banner = () => {

@@ -1,6 +1,5 @@
 import {FC} from 'react';
 import SportsBarSharpIcon from '@mui/icons-material/SportsBarSharp';
-
 import { MarkerContainer, Label } from './map-marker.styles';
 
 type MarkerProps = {

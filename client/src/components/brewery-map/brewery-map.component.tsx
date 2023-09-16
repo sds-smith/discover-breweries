@@ -1,9 +1,7 @@
 import {FC} from "react";
 import GoogleMapReact from 'google-map-react';
 import Marker from "../map-marker/map-marker.component";
-
 import { CenterType } from "../../utils/types.utils";
-
 import {MapContainer} from './brewery-map.styles';
 
 type BreweryMapProps = {

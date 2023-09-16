@@ -1,5 +1,4 @@
 import {useState, useEffect, useContext, FC} from 'react';
-
 import CityTableRow from '../table-row/table-row.component';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,8 +12,6 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
-
-
 import { BreweryContext } from '../../context/brewery.context';
 import { BreweryArray } from '../../utils/types.utils';
 

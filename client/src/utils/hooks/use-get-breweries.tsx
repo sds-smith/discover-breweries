@@ -1,13 +1,10 @@
 import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import { httpGetMyLocalBreweries, httpgetDefaultBreweries, httpGetSearchCityBreweries } from "../http";
 import { ClientContext } from "../../context/client.context";
 import { BreweryContext, DEFAULT_LOAD_TEXT } from "../../context/brewery.context";
 import useTrackLocation from './use-track-location';
-
 import { GetBreweryResponseType, defaultBreweryState, defaultCenter, SearchCityType } from "../types.utils";
-
 
 const useGetBreweries = () => {
     const params = useParams();

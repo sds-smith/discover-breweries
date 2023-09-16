@@ -1,9 +1,6 @@
-
 import Box from '@mui/material/Box';
-
 import SearchBar from "../search-bar/search-bar.component";
 import ButtonBreweriesNearMe from '../button-breweries-near-me/button-breweries-near-me.component';
-
 import { ActionBoxContainer } from './action-box.styles';
 
 const ActionBox = () => {

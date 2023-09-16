@@ -3,14 +3,12 @@ import BreweryMap from '../brewery-map/brewery-map.component';
 import useGetBreweries from '../../utils/hooks/use-get-breweries';
 import { ClientContext } from '../../context/client.context';
 import { BreweryType, CenterType, defaultBreweryState, defaultCenter, GetBreweryResponseType } from '../../utils/types.utils';
-
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-
 import { encodeMapParams } from '../../utils';
 
 export default function MediaCard() {

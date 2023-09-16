@@ -7,7 +7,6 @@ import TableCell from '@mui/material/TableCell';
 
 import { BreweryContext } from "../../context/brewery.context";
 import { BreweryType } from "../../utils/types.utils";
-
 import { TableLink } from "./table-row.styles";
 
 type TableRowProps = {

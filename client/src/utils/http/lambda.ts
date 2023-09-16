@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { SearchCityType } from '../types.utils';
 
-const API_BASE_URL='v1';
 const AWS_API_URL = 'https://3vd325v5vc.execute-api.us-east-1.amazonaws.com/default'
 
 export async function httpGetSearchCityBreweries(city: SearchCityType) {

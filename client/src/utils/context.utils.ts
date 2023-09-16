@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { BreweryArray, BreweryType } from "./types.utils";
 
-
 export type BreweryContextProps = {
     defaultBreweries: BreweryArray;
     setDefaultBreweries(defaultBreweries: BreweryArray): void;

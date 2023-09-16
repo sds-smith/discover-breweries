@@ -5,11 +5,11 @@ import useGetBreweries from "../../utils/hooks/use-get-breweries";
 import { BreweryContext } from "../../context/brewery.context";
 
 const DefaultCity = () => {
-    const {defaultBreweries, hasBreweries} = useContext(BreweryContext);
+    const {defaultBreweries, hasBreweries, loading} = useContext(BreweryContext);
     const {getDefaultBreweries} = useGetBreweries();
 
     useEffect(() => {
-        if (!hasBreweries(defaultBreweries)) {
+        if (!hasBreweries(defaultBreweries) && !loading) {
             getDefaultBreweries();
         };
     }, []);

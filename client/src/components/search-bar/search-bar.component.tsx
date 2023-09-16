@@ -6,12 +6,9 @@ import FormControl from '@mui/material/FormControl';
 import Select, {SelectChangeEvent} from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-
 import useGetBreweries from '../../utils/hooks/use-get-breweries';
 import { defaultSearchCityState } from '../../utils/types.utils';
 import {STATES} from '../../assets/data/states.js';
-
-import { transformStateName } from '../../utils';
 
 const SearchBar = ({styles={backgroundColor: 'unset', color: 'white', margin: 'unset'}}) => {
     const [searchParams, setSearchParams] = useState(defaultSearchCityState);

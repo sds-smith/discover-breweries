@@ -23,7 +23,6 @@ const BreadcrumbTrail = () => {
         </BreadcrumbLink>
     ];
     pathnames.forEach((pathname) => {
-
       accumulator = transformLabel(pathname) === defaultCity
                     ? accumulator.concat(`/${encodePath(defaultCity)}`) 
                     : accumulator.concat(`/${pathname}`);

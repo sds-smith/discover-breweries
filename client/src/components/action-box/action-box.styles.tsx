@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import Paper from '@mui/material/Paper';
-
 import SearchBar from "../search-bar/search-bar.component";
 
 export const ActionBoxContainer = styled(Paper)`

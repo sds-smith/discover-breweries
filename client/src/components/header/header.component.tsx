@@ -1,17 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-
 import SearchBar from '../search-bar/search-bar.component';
 import ButtonBreweriesNearMe from '../button-breweries-near-me/button-breweries-near-me.component';
-
 import BeerIcon from '../../assets/Beer-icon.png';
 
 export default function ButtonAppBar() {

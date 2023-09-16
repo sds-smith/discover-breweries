@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Button from '@mui/material/Button';
 import useGetBreweries from '../../utils/hooks/use-get-breweries';
 

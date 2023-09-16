@@ -1,13 +1,10 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-
 import { BreweryContext } from '../../context/brewery.context';
-
 import { capitalizeAll, encodePath } from '../../utils';
 import { BreweryType } from '../../utils/types.utils';
-
 import { CityGridContainer, CustomGrid } from './city-grid.styles';
 
 const CityGrid = () => {
@@ -50,10 +47,8 @@ const CityGrid = () => {
                     </Grid>
 
                 }
-
             </CustomGrid>
         </CityGridContainer>
-
     )
 };
 

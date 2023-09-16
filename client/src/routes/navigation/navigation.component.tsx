@@ -1,8 +1,6 @@
-
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "../../components/header/header.component";
 import BreadcrumbTrail from "../../components/breadcrumbs/breadcrumbs.component";
-
 import { NavigationContainer } from "./navigation.styles";
 
 const Navigation = () => {

@@ -11,6 +11,8 @@ For this iteration, I removed the node/express server and moved the backend logi
 
 The frontend React app is served as a static site from an AWS S3 bucket via an AWS Cloudfront distribution.
 
+- Frontend code changes are deployed to S3 via aws cli script
+
 - API calls to OpenBreweryDB are now made directly from the frontend on click of 'FIND BREWERIES NEAR ME'
 
 Three Lambda functions power the backend, connecting to MongoDB Atlas and performing the full range of CRUD operations:

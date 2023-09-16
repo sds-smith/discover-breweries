@@ -8,11 +8,15 @@
     "install": "npm run install-client",
     "client": "npm start --prefix client",
     "start": "npm run client",
-    "aws-s3-sync": "aws s3 sync client/build s3://discover-breweries-static-frontend",
+    "aws-s3-sync": "dotenv cross-var aws s3 sync client/build %S3_BUCKET%",
     "deploy": "npm run build --prefix client && npm run aws-s3-sync",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Shawn Smith",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^7.3.0"
+  }
 }

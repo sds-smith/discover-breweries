@@ -16,6 +16,8 @@ export const BreweryContext = createContext<BreweryContextProps>({
     selectedBrewery: defaultBreweryState,
     setSelectedBrewery: ()=>{},
     hasBreweries: ()=>false,
+    searchErrorMsg: '',
+    setSearchErrorMsg: ()=>{},
     loading: false,
     setLoading: ()=>false
 });
@@ -29,6 +31,7 @@ export const BreweryProvider: FC<ProviderProps> = ({children}) => {
     const [loadText, setLoadText] = useState<string>(DEFAULT_LOAD_TEXT);
     const [defaultCity, setDefaultCity] = useState<string>('')
     const [selectedBrewery, setSelectedBrewery] = useState<BreweryType>(defaultBreweryState)
+    const [searchErrorMsg, setSearchErrorMsg] = useState<string>('')
     const [loading, setLoading] = useState<Boolean>(false)
 
     const hasBreweries = (array: BreweryArray): boolean => {
@@ -49,6 +52,8 @@ export const BreweryProvider: FC<ProviderProps> = ({children}) => {
         hasBreweries,
         selectedBrewery,
         setSelectedBrewery,
+        searchErrorMsg, 
+        setSearchErrorMsg,
         loading,
         setLoading
     }

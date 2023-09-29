@@ -20,7 +20,7 @@ const useTrackLocation = () => {
 
     const error = () => {
         console.log('Unable to retrieve your location')
-        setLocationErrorMsg('Unable to retrieve your location')
+        setLocationErrorMsg('Unable to retrieve location')
         setIsFindingLocation(false)
     }
 

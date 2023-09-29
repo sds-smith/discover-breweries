@@ -1,6 +1,7 @@
 import {useState, useEffect, useContext, FC} from 'react';
 import CityTableRow from '../table-row/table-row.component';
 import Table from '@mui/material/Table';
+import Grid from '@mui/material/Grid';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -14,6 +15,7 @@ import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import { BreweryContext } from '../../context/brewery.context';
 import { BreweryArray } from '../../utils/types.utils';
+import { CustomTableBody } from './city-table.styles';
 
 type CityTableProps = {
     breweriesToRender: BreweryArray,
@@ -50,23 +52,25 @@ const CityTable: FC<CityTableProps> = ({breweriesToRender, where}) => {
     return (
         <>
             { hasBreweries(breweriesToRender) ? (
-                    <TableContainer >     
+                    <TableContainer sx={{width: {xs: '100%'}}} >     
                         <Typography variant='h4' component='h2' sx={{marginTop: '40px', textAlign: 'center'}}>{`Breweries ${where} ${city}`}</Typography>
-                        <Paper elevation={12} sx={{width: '80vw', margin: '20px auto'}} >
+                        <Paper elevation={12} sx={{width: {xs: '95vw', lg: '80vw'}, margin: '20px auto'}} >
                             <Table sx={{tableLayout: 'fixed'}} >
                                 <TableHead >
                                     <TableRow>
-                                        <TableCell>Name</TableCell>
-                                        <TableCell align="right">Type</TableCell>
-                                        <TableCell align="right">Address</TableCell>
-                                        <TableCell align="right">Website</TableCell>
+                                        <TableCell sx={{width: {xs: '20%', lg: '20%'}}}>Name</TableCell>
+                                        <TableCell sx={{width: {xs: '10%', lg: '10%'}}} align="left">Type</TableCell>
+                                        <TableCell sx={{width: {xs: '0%', lg: '35%'}, display: { xs: 'none', lg: 'flex' }}} align="left">Address</TableCell>
+                                        <TableCell sx={{width: {xs: '35%', lg: '35%'}}} align="left">Website</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                 { 
                                     breweriesToRender.slice(start, end).map((brewery, index)=> {
                                         if (brewery !== null) {
-                                            return <CityTableRow key={`${brewery.id}${index}`} brewery={brewery} />
+                                            return  (
+                                                        <CityTableRow key={`${brewery.id}${index}`} brewery={brewery} />
+                                                    )
                                         }
                                     })
                                 }

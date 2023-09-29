@@ -15,6 +15,8 @@ export type BreweryContextProps = {
     selectedBrewery: BreweryType;
     setSelectedBrewery(selectedBrewery: BreweryType): void;
     hasBreweries(array: BreweryArray): boolean;
+    searchErrorMsg: string;
+    setSearchErrorMsg(searchErrorMsg: string): void;
     loading: Boolean;
     setLoading(loading: Boolean): void;
 }

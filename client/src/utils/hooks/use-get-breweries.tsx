@@ -13,7 +13,7 @@ const useGetBreweries = () => {
     const [breweriesError, setBreweriesError] = useState('');
 
     const {clientLatLong} = useContext(ClientContext);
-    const { setLoading, setDefaultCity, defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
+    const { setLoading, setSearchErrorMsg, setDefaultCity, defaultBreweries, setDefaultBreweries, breweriesNearMe, setBreweriesNearMe, searchCityBreweries, setSearchCityBreweries, setLoadText} = useContext(BreweryContext);
     
     const {handleTrackLocation} = useTrackLocation();
 
@@ -44,6 +44,7 @@ const useGetBreweries = () => {
         if (message === 'Breweries Retrieved') {
           setSearchCityBreweries(breweries)
           setBreweriesError('')
+          if (!breweries.length) setSearchErrorMsg(`There were no breweries found in ${city.city}`)
           setLoadText(DEFAULT_LOAD_TEXT)
         } else {
           setBreweriesError(message)

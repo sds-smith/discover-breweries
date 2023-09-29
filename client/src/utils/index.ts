@@ -9,7 +9,7 @@ export function capitalizeAll(string: string) {
 };
 
 export function encodePath(string: string) {
-  return string.split(' ').join('-')
+  return string.split(' ').map(word => word.toLowerCase()).join('-')
 };
   
 //breadcrumbs

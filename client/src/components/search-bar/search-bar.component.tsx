@@ -74,7 +74,7 @@ const SearchBar = ({styles={backgroundColor: 'unset', color: 'white', margin: 'u
                   id="standard-basic" 
                   placeholder='City' 
                   variant="standard" 
-                  sx={{margin: '10px 0 0 30px', width: '80%'}}
+                  sx={{margin: '10px 0 30px 30px', width: '80%'}}
             />
             <Button type='submit' sx={{height: '0px'}}></Button>
         </Box>

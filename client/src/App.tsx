@@ -7,6 +7,8 @@ import BreweriesNearMe from "./routes/breweries-near-me/breweries-near-me.compon
 import SearchResults from "./routes/search-results/search-results.component";
 import DefaultCity from "./components/default-city/default-city.component";
 import { BreweryContext } from "./context/brewery.context";
+import { encodePath } from './utils';
+
 import './App.css'
 
 const App = () => {
@@ -16,7 +18,7 @@ const App = () => {
         <Routes>
             <Route path='/' element={<Navigation />} >
                 <Route index element={<Home />} />
-                <Route path={defaultCity} element={<DefaultCity />} />
+                <Route path={encodePath(defaultCity)} element={<DefaultCity />} />
                 <Route path='breweries-near-me' element={<BreweriesNearMe />} />
                 <Route path=':city/:id' element={<BreweryPage />} />
                 <Route path=':city' element={<SearchResults />} />

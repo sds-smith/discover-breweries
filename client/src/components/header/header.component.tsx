@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -35,11 +36,15 @@ export default function ButtonAppBar() {
             <Typography variant="h6" component="div" >
               Discover Breweries
             </Typography>
-            <SearchBar />
+            <Box sx={{ display: { xs: 'none', lg: 'flex' }}}>
+              <SearchBar />
+            </Box>
           </Box>
           <ButtonGroup variant='text' aria-label="text button group" >
             <Button onClick={goHome} color="inherit" sx={{margin: '30px auto'}}>Home</Button>
-            <ButtonBreweriesNearMe variant='text' />
+            <Box sx={{ display: { xs: 'none', lg: 'flex' }}}>
+              <ButtonBreweriesNearMe variant='text' />
+            </Box>
           </ButtonGroup>
         </Toolbar>
       </AppBar>

@@ -46,7 +46,3 @@ Three Lambda functions power the backend, connecting to MongoDB Atlas and perfor
 - Material UI Component Library
 - CSS-in-JS (emotion) for styling
 - Mongoose for MongoDB integration
-
-## Demo the App
-
-The app is hosted live at [https://d3a12a5s7dak7b.cloudfront.net/](https://d3a12a5s7dak7b.cloudfront.net/). Feel free to try it out.

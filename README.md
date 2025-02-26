@@ -9,7 +9,7 @@ To view the previous MERN stack version, please see branch [v2.0_mern](https://g
 
 For this iteration, I removed the node/express server and moved the backend logic into AWS Lambda function for a more lightweight serverless deployment.
 
-The frontend React app is served as a static site from an AWS S3 bucket via an AWS Cloudfront distribution.
+The frontend React app is served from an AWS S3 bucket via an AWS Cloudfront distribution.
 
 - Frontend code changes are deployed to S3 via aws cli script
 
